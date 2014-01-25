@@ -1,12 +1,15 @@
+TESTS=test/spec/*.js
 
-TESTS = test/*.test.js
-REPORTER = dot
+all: node_modules
 
-test:
-	@NODE_ENV=test ./node_modules/.bin/mocha \
-		--ui exports \
-		--reporter $(REPORTER) \
-		$(TESTS)
+node_modules: package.json
+	npm install
+	touch node_modules
+
+test: node_modules
+	./node_modules/.bin/mocha --reporter dot $(TESTS)
+	./node_modules/.bin/jshint .
+	./node_modules/.bin/jscs .
 
 docs:
 	@./bin/dox \
@@ -21,4 +24,4 @@ doc-server:
 	@./bin/dox \
 		--server docs
 
-.PHONY: test docs
+.PHONY: all test docs
