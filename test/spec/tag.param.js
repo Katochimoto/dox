@@ -293,7 +293,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('many types', function() {
-        var tag = dox.parseTag('@param {*} test');
+        var tag = dox.parseTag('@param {*} test   \n\n   \n  ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');
