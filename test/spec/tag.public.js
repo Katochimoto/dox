@@ -1,13 +1,11 @@
-if (typeof require == 'function') {
+describe('parse.tag @public', function() {
     /*jshint -W020 */
-    dox = require('../../');
+    var parse = require('../../lib/parse.tag').parse;
     /*jshint -W020 */
-    expect = require('expect.js');
-}
+    var expect = require('expect.js');
 
-describe('dox.parseTag() @public', function() {
     it('public empty text', function() {
-        var tag = dox.parseTag('@public');
+        var tag = parse('@public');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'level');
         expect(tag.type).to.be('access');
@@ -15,7 +13,7 @@ describe('dox.parseTag() @public', function() {
     });
 
     it('public empty text', function() {
-        var tag = dox.parseTag('@public   \n\n  \n\n ');
+        var tag = parse('@public   \n\n  \n\n ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'level');
         expect(tag.type).to.be('access');
@@ -23,7 +21,7 @@ describe('dox.parseTag() @public', function() {
     });
 
     it('public empty text', function() {
-        var tag = dox.parseTag('@public sdfsdfsdf \n\n  \n  ');
+        var tag = parse('@public sdfsdfsdf \n\n  \n  ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'level');
         expect(tag.type).to.be('access');

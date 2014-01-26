@@ -1,13 +1,11 @@
-if (typeof require == 'function') {
+describe('parse.tag @example', function() {
     /*jshint -W020 */
-    dox = require('../../');
+    var parse = require('../../lib/parse.tag').parse;
     /*jshint -W020 */
-    expect = require('expect.js');
-}
+    var expect = require('expect.js');
 
-describe('dox.parseTag() @example', function() {
     it('example empty text', function() {
-        var tag = dox.parseTag('@example    ');
+        var tag = parse('@example    ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -15,7 +13,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example empty multiline text', function() {
-        var tag = dox.parseTag('@example   \n   \n\n\n   ');
+        var tag = parse('@example   \n   \n\n\n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -23,7 +21,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example empty text and error caption', function() {
-        var tag = dox.parseTag('@example test error caption');
+        var tag = parse('@example test error caption');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -31,7 +29,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example empty multiline text and error caption', function() {
-        var tag = dox.parseTag('@example test error caption\n   \n\n\n   ');
+        var tag = parse('@example test error caption\n   \n\n\n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -39,7 +37,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example empty text and caption', function() {
-        var tag = dox.parseTag('@example    <caption>   test caption   </caption>   ');
+        var tag = parse('@example    <caption>   test caption   </caption>   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string', 'title');
         expect(tag.type).to.be('example');
@@ -48,7 +46,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example empty multiline text and caption', function() {
-        var tag = dox.parseTag('@example    <caption>   test caption   </caption>   \n   \n\n\n   ');
+        var tag = parse('@example    <caption>   test caption   </caption>   \n   \n\n\n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string', 'title');
         expect(tag.type).to.be('example');
@@ -57,7 +55,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example text and empty caption', function() {
-        var tag = dox.parseTag('@example  \n   test example   \n\n');
+        var tag = parse('@example  \n   test example   \n\n');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -65,7 +63,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example multiline text and empty caption', function() {
-        var tag = dox.parseTag('@example  \n   test example   \n\nnext line\n\n');
+        var tag = parse('@example  \n   test example   \n\nnext line\n\n');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string');
         expect(tag.type).to.be('example');
@@ -73,7 +71,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example text and caption', function() {
-        var tag = dox.parseTag('@example    <caption>   test caption   </caption>    \n   test example   \n\n');
+        var tag = parse('@example    <caption>   test caption   </caption>    \n   test example   \n\n');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string', 'title');
         expect(tag.type).to.be('example');
@@ -82,7 +80,7 @@ describe('dox.parseTag() @example', function() {
     });
 
     it('example multiline text and caption', function() {
-        var tag = dox.parseTag('@example    <caption>   test caption   </caption>    \n   test example   \n\nnext line\n\n');
+        var tag = parse('@example    <caption>   test caption   </caption>    \n   test example   \n\nnext line\n\n');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'string', 'title');
         expect(tag.type).to.be('example');

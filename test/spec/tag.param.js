@@ -1,35 +1,33 @@
-if (typeof require == 'function') {
+describe('parse.tag @param', function() {
     /*jshint -W020 */
-    dox = require('../../');
+    var parse = require('../../lib/parse.tag').parse;
     /*jshint -W020 */
-    expect = require('expect.js');
-}
+    var expect = require('expect.js');
 
-describe('dox.parseTag() @param', function() {
 
     it('param empty type and name', function() {
-        var tag = dox.parseTag('@param    ');
+        var tag = parse('@param    ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('param');
     });
 
     it('param empty type and name', function() {
-        var tag = dox.parseTag('@param');
+        var tag = parse('@param');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('param');
     });
 
     it('param empty type and name', function() {
-        var tag = dox.parseTag('@param  \n\n  \n');
+        var tag = parse('@param  \n\n  \n');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('param');
     });
 
     it('param empty type', function() {
-        var tag = dox.parseTag('@param    test   ');
+        var tag = parse('@param    test   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name');
         expect(tag.type).to.be('param');
@@ -37,7 +35,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('param empty type', function() {
-        var tag = dox.parseTag('@param    test \n\n   \n  ');
+        var tag = parse('@param    test \n\n   \n  ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name');
         expect(tag.type).to.be('param');
@@ -45,7 +43,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('param empty type by description', function() {
-        var tag = dox.parseTag('@param test text description');
+        var tag = parse('@param test text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'description');
         expect(tag.type).to.be('param');
@@ -54,7 +52,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('param empty type by description', function() {
-        var tag = dox.parseTag('@param    test text description\n\n   \n  ');
+        var tag = parse('@param    test text description\n\n   \n  ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'description');
         expect(tag.type).to.be('param');
@@ -63,7 +61,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type', function() {
-        var tag = dox.parseTag('@param [test]');
+        var tag = parse('@param [test]');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional');
         expect(tag.type).to.be('param');
@@ -72,7 +70,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type by description', function() {
-        var tag = dox.parseTag('@param [test] text description');
+        var tag = parse('@param [test] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'description');
         expect(tag.type).to.be('param');
@@ -82,7 +80,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type', function() {
-        var tag = dox.parseTag('@param    [test]     \n\n   \n   ');
+        var tag = parse('@param    [test]     \n\n   \n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional');
         expect(tag.type).to.be('param');
@@ -91,7 +89,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type by description', function() {
-        var tag = dox.parseTag('@param    [test]     text description     \n\n   \n   ');
+        var tag = parse('@param    [test]     text description     \n\n   \n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'description');
         expect(tag.type).to.be('param');
@@ -101,7 +99,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type default value', function() {
-        var tag = dox.parseTag('@param [test=qwe asd]');
+        var tag = parse('@param [test=qwe asd]');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'default');
         expect(tag.type).to.be('param');
@@ -111,7 +109,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type by description default value', function() {
-        var tag = dox.parseTag('@param [test=qwe asd] text description');
+        var tag = parse('@param [test=qwe asd] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'description', 'default');
         expect(tag.type).to.be('param');
@@ -122,7 +120,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type default value', function() {
-        var tag = dox.parseTag('@param    [test=qwe asd]     \n\n   \n   ');
+        var tag = parse('@param    [test=qwe asd]     \n\n   \n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'default');
         expect(tag.type).to.be('param');
@@ -132,7 +130,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty type by description default value', function() {
-        var tag = dox.parseTag('@param    [test=qwe asd]     text description     \n\n   \n   ');
+        var tag = parse('@param    [test=qwe asd]     text description     \n\n   \n   ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'name', 'optional', 'description', 'default');
         expect(tag.type).to.be('param');
@@ -143,7 +141,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('param empty name', function() {
-        var tag = dox.parseTag('@param {String}');
+        var tag = parse('@param {String}');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types');
         expect(tag.type).to.be('param');
@@ -153,7 +151,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('param empty description', function() {
-        var tag = dox.parseTag('@param {String} test');
+        var tag = parse('@param {String} test');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');
@@ -164,7 +162,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty description', function() {
-        var tag = dox.parseTag('@param {String} [test]');
+        var tag = parse('@param {String} [test]');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional');
         expect(tag.type).to.be('param');
@@ -176,7 +174,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param empty description by default', function() {
-        var tag = dox.parseTag('@param {String} [test=qwe asd]');
+        var tag = parse('@param {String} [test=qwe asd]');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'default');
         expect(tag.type).to.be('param');
@@ -189,7 +187,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param not empty description by default', function() {
-        var tag = dox.parseTag('@param {String} [test=qwe asd] text description');
+        var tag = parse('@param {String} [test=qwe asd] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'default', 'description');
         expect(tag.type).to.be('param');
@@ -203,7 +201,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param not empty description by default', function() {
-        var tag = dox.parseTag('@param {!String} [test=qwe asd] text description');
+        var tag = parse('@param {!String} [test=qwe asd] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'default', 'description', 'nonNullable');
         expect(tag.type).to.be('param');
@@ -218,7 +216,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param not empty description by default', function() {
-        var tag = dox.parseTag('@param {?String} [test=qwe asd] text description');
+        var tag = parse('@param {?String} [test=qwe asd] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'default', 'description', 'nullable');
         expect(tag.type).to.be('param');
@@ -233,7 +231,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param not empty description by default', function() {
-        var tag = dox.parseTag('@param {String=} [test=qwe asd] text description');
+        var tag = parse('@param {String=} [test=qwe asd] text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'default', 'description');
         expect(tag.type).to.be('param');
@@ -247,7 +245,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('optional param not empty description by default', function() {
-        var tag = dox.parseTag('@param {String=} test text description');
+        var tag = parse('@param {String=} test text description');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name', 'optional', 'description');
         expect(tag.type).to.be('param');
@@ -260,7 +258,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('many types', function() {
-        var tag = dox.parseTag('@param {string|boolean} test');
+        var tag = parse('@param {string|boolean} test');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');
@@ -271,7 +269,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('many types', function() {
-        var tag = dox.parseTag('@param {(string|boolean)} test');
+        var tag = parse('@param {(string|boolean)} test');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');
@@ -282,7 +280,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('many types', function() {
-        var tag = dox.parseTag('@param {{a: number, b: string, c}} test');
+        var tag = parse('@param {{a: number, b: string, c}} test');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');
@@ -293,7 +291,7 @@ describe('dox.parseTag() @param', function() {
     });
 
     it('many types', function() {
-        var tag = dox.parseTag('@param {*} test   \n\n   \n  ');
+        var tag = parse('@param {*} test   \n\n   \n  ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type', 'types', 'name');
         expect(tag.type).to.be('param');

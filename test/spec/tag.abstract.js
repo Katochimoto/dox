@@ -1,27 +1,25 @@
-if (typeof require == 'function') {
+describe('parse.tag @abstract', function() {
     /*jshint -W020 */
-    dox = require('../../');
+    var parse = require('../../lib/parse.tag').parse;
     /*jshint -W020 */
-    expect = require('expect.js');
-}
+    var expect = require('expect.js');
 
-describe('dox.parseTag() @abstract', function() {
     it('abstract empty text', function() {
-        var tag = dox.parseTag('@abstract');
+        var tag = parse('@abstract');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('abstract');
     });
 
     it('abstract empty text', function() {
-        var tag = dox.parseTag('@abstract   \n\n   \n ');
+        var tag = parse('@abstract   \n\n   \n ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('abstract');
     });
 
     it('abstract empty text', function() {
-        var tag = dox.parseTag('@abstract  sfsdfsdf \n\n   \n ');
+        var tag = parse('@abstract  sfsdfsdf \n\n   \n ');
         expect(tag).to.be.a(Object);
         expect(tag).to.only.have.keys('type');
         expect(tag.type).to.be('abstract');

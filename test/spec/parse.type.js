@@ -1,14 +1,13 @@
-if (typeof require == 'function') {
-    /*jshint -W020 */
-    dox = require('../../');
-    /*jshint -W020 */
-    expect = require('expect.js');
-}
+describe('parse.type', function() {
 
-describe('exports.parseTagTypes', function() {
+    /*jshint -W020 */
+    var parse = require('../../lib/parse.type').parse;
+    /*jshint -W020 */
+    var expect = require('expect.js');
+
 
     it('allows any type', function() {
-        var tagTypes = dox.parseTagTypes('{*}');
+        var tagTypes = parse('{*}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -18,7 +17,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('symbol name', function() {
-        var tagTypes = dox.parseTagTypes('{boolean}');
+        var tagTypes = parse('{boolean}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -28,7 +27,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('name expression', function() {
-        var tagTypes = dox.parseTagTypes('{myNamespace.MyClass}');
+        var tagTypes = parse('{myNamespace.MyClass}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -38,7 +37,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('multiple types', function() {
-        var tagTypes = dox.parseTagTypes('{string|boolean}');
+        var tagTypes = parse('{string|boolean}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -48,7 +47,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('multiple types', function() {
-        var tagTypes = dox.parseTagTypes('{(string|boolean)}');
+        var tagTypes = parse('{(string|boolean)}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -58,7 +57,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('multiple types', function() {
-        var tagTypes = dox.parseTagTypes('{(string|Array.<string>)}');
+        var tagTypes = parse('{(string|Array.<string>)}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -68,7 +67,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('arrays and objects (type applications and record types)', function() {
-        var tagTypes = dox.parseTagTypes('{Array.<MyClass>}');
+        var tagTypes = parse('{Array.<MyClass>}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -78,7 +77,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('arrays and objects (type applications and record types)', function() {
-        var tagTypes = dox.parseTagTypes('{MyClass[]}');
+        var tagTypes = parse('{MyClass[]}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -88,7 +87,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('arrays and objects (type applications and record types)', function() {
-        var tagTypes = dox.parseTagTypes('{Object.<string, number>}');
+        var tagTypes = parse('{Object.<string, number>}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -98,7 +97,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('arrays and objects (type applications and record types)', function() {
-        var tagTypes = dox.parseTagTypes('{{a: number, b: string, c}}');
+        var tagTypes = parse('{{a: number, b: string, c}}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -108,7 +107,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('nullable type', function() {
-        var tagTypes = dox.parseTagTypes('{?number}');
+        var tagTypes = parse('{?number}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types', 'nullable');
 
@@ -120,7 +119,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('non-nullable type', function() {
-        var tagTypes = dox.parseTagTypes('{!number}');
+        var tagTypes = parse('{!number}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types', 'nonNullable');
 
@@ -132,7 +131,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('variable number of that type', function() {
-        var tagTypes = dox.parseTagTypes('{...number}');
+        var tagTypes = parse('{...number}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
@@ -142,7 +141,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('optional parameter', function() {
-        var tagTypes = dox.parseTagTypes('{number=}');
+        var tagTypes = parse('{number=}');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types', 'optional');
 
@@ -154,7 +153,7 @@ describe('exports.parseTagTypes', function() {
     });
 
     it('error parameter', function() {
-        var tagTypes = dox.parseTagTypes('number');
+        var tagTypes = parse('number');
         expect(tagTypes).to.be.a(Object);
         expect(tagTypes).to.only.have.keys('types');
 
