@@ -1,5 +1,5 @@
 {
-    "name": "dox",
+    "name": "mdox",
     "private": true,
     "description": "Markdown / JSdoc documentation generator",
     "version": "0.4.4",
@@ -9,15 +9,15 @@
     },
     "bugs": {
         "email": "bufpost@yandex.ru",
-        "url": "https://github.com/Katochimoto/dox/issues"
+        "url": "https://github.com/Katochimoto/mdox/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:Katochimoto/dox.git"
+        "url": "git@github.com:Katochimoto/mdox.git"
     },
     "keywords": ["documentation", "docs", "markdown", "jsdoc"],
     "bin": {
-        "dox": "./bin/dox"
+        "mdox": "./bin/mdox"
     },
     "license": "MIT",
     "dependencies": {
