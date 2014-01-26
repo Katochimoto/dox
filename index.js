@@ -2,19 +2,19 @@
 (function() {
     'use strict';
 
-    var dox = require('./lib/dox.js');
+    var mdox = require('./lib/mdox.js');
 
-    dox.version = '0.4.4';
+    mdox.version = '0.4.4';
 
     var namespace;
 
     if (typeof module !== 'undefined') {
-        namespace = module.exports = dox;
+        namespace = module.exports = mdox;
     } else {
         namespace = (function() {
             return this || (1, eval)('this');
         }());
     }
 
-    namespace.dox = dox;
+    namespace.mdox = mdox;
 }());

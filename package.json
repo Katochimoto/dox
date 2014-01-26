@@ -14,11 +14,19 @@
         "type": "git",
         "url": "git@github.com:Katochimoto/mdox.git"
     },
-    "keywords": ["documentation", "docs", "markdown", "jsdoc"],
+    "keywords": [
+        "documentation",
+        "docs",
+        "markdown",
+        "jsdoc"
+    ],
     "bin": {
         "mdox": "./bin/mdox"
     },
     "license": "MIT",
+    "scripts": {
+        "test": "make test"
+    },
     "dependencies": {
         "github-flavored-markdown": ">= 0.0.1",
         "commander": "0.6.1"
