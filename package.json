@@ -1,8 +1,7 @@
 {
     "name": "mdox",
-    "private": true,
     "description": "Markdown / JSdoc documentation generator",
-    "version": "0.4.4",
+    "version": "0.0.1-beta",
     "author": {
         "name": "rikishi",
         "email": "bufpost@yandex.ru"
