@@ -202,4 +202,25 @@ describe('parse.comment', function() {
 
         expect(comment.isPrivate).to.not.be.ok();
     });
+
+    it('multiline types', function() {
+        var comment = parse('@param {String} test\n@return {Boolean}', { raw: true });
+        expect(comment).to.be.a(Object);
+        expect(comment).to.only.have.keys('tags', 'description', 'isPrivate');
+
+        expect(comment.tags).to.be.a(Array);
+        expect(comment.tags).to.have.length(2);
+        expect(comment.tags).to.eql([
+            { type: 'param', types: [ 'String' ], name: 'test' },
+            { type: 'return', types: [ 'Boolean' ] }
+        ]);
+
+        expect(comment.description).to.be.a(Object);
+        expect(comment.description).to.only.have.keys('full', 'summary', 'body');
+        expect(comment.description.full).to.be('');
+        expect(comment.description.summary).to.be('');
+        expect(comment.description.body).to.be('');
+
+        expect(comment.isPrivate).to.not.be.ok();
+    });
 });
