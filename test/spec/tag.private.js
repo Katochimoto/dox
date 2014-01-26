@@ -7,25 +7,22 @@ describe('parse.tag @private', function() {
     it('private empty text', function() {
         var tag = parse('@private');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
-        expect(tag.type).to.be('access');
-        expect(tag.level).to.be('private');
+        expect(tag).to.only.have.keys('type');
+        expect(tag.type).to.be('private');
     });
 
     it('private empty text', function() {
         var tag = parse('@private   \n\n  \n\n ');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
-        expect(tag.type).to.be('access');
-        expect(tag.level).to.be('private');
+        expect(tag).to.only.have.keys('type');
+        expect(tag.type).to.be('private');
     });
 
     it('private empty text', function() {
         var tag = parse('@private sdfsdfsdf \n\n  \n  ');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
-        expect(tag.type).to.be('access');
-        expect(tag.level).to.be('private');
+        expect(tag).to.only.have.keys('type');
+        expect(tag.type).to.be('private');
     });
 
 });

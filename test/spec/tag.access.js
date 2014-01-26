@@ -5,44 +5,44 @@ describe('parse.tag @access', function() {
     var expect = require('expect.js');
 
     it('access empty text', function() {
-        var tag = parse('@access');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.eql({});
+        expect(function() {
+            parse('@access');
+        }).to.throwError();
     });
 
     it('access empty text', function() {
-        var tag = parse('@access   \n\n   \n ');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.eql({});
+        expect(function() {
+            parse('@access   \n\n   \n ');
+        }).to.throwError();
     });
 
     it('access empty text', function() {
-        var tag = parse('@access  sfsdfsdf \n\n   \n ');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.eql({});
+        expect(function() {
+            parse('@access  sfsdfsdf \n\n   \n ');
+        }).to.throwError();
     });
 
     it('access public', function() {
         var tag = parse('@access public');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
+        expect(tag).to.only.have.keys('type', 'access');
         expect(tag.type).to.be('access');
-        expect(tag.level).to.be('public');
+        expect(tag.access).to.be('public');
     });
 
     it('access protected', function() {
         var tag = parse('@access protected');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
+        expect(tag).to.only.have.keys('type', 'access');
         expect(tag.type).to.be('access');
-        expect(tag.level).to.be('protected');
+        expect(tag.access).to.be('protected');
     });
 
     it('access private', function() {
         var tag = parse('@access private');
         expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'level');
+        expect(tag).to.only.have.keys('type', 'access');
         expect(tag.type).to.be('access');
-        expect(tag.level).to.be('private');
+        expect(tag.access).to.be('private');
     });
 });

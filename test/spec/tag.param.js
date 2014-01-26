@@ -6,24 +6,21 @@ describe('parse.tag @param', function() {
 
 
     it('param empty type and name', function() {
-        var tag = parse('@param    ');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type');
-        expect(tag.type).to.be('param');
+        expect(function() {
+            parse('@param    ');
+        }).to.throwError();
     });
 
     it('param empty type and name', function() {
-        var tag = parse('@param');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type');
-        expect(tag.type).to.be('param');
+        expect(function() {
+            parse('@param');
+        }).to.throwError();
     });
 
     it('param empty type and name', function() {
-        var tag = parse('@param  \n\n  \n');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type');
-        expect(tag.type).to.be('param');
+        expect(function() {
+            parse('@param  \n\n  \n');
+        }).to.throwError();
     });
 
     it('param empty type', function() {
@@ -141,13 +138,9 @@ describe('parse.tag @param', function() {
     });
 
     it('param empty name', function() {
-        var tag = parse('@param {String}');
-        expect(tag).to.be.a(Object);
-        expect(tag).to.only.have.keys('type', 'types');
-        expect(tag.type).to.be('param');
-        expect(tag.types).to.be.a(Array);
-        expect(tag.types).to.have.length(1);
-        expect(tag.types).to.eql([ 'String' ]);
+        expect(function() {
+            parse('@param {String}');
+        }).to.throwError();
     });
 
     it('param empty description', function() {
