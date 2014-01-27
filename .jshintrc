@@ -4,11 +4,11 @@
     "jquery": true,
     "globals": {
         "require": false,
-        "strftime": false,
         "module": false,
         "expect": false,
         "it": false,
-        "describe": false
+        "describe": false,
+        "exports": false
     },
 
     "bitwise": true,
