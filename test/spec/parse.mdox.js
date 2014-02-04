@@ -1,4 +1,5 @@
 describe('parse.comment', function() {
+    /* global __dirname */
 
     var parse = require('../../lib/mdox').parse;
     var expect = require('expect.js');
