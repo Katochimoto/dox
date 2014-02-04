@@ -67,10 +67,6 @@
     "disallowSpaceAfterObjectKeys": true,
     "disallowYodaConditions": true,
     "excludeFiles": [
-        "node_modules",
-        "test",
-        "strftime.js",
-        "strftime.min.js",
-        "doc"
+        "node_modules"
     ]
 }
