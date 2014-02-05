@@ -1,6 +1,6 @@
 match / {
 
-    apply .comments item-comment
+    apply .comments[!(.ignore)] item-comment
 
 }
 
@@ -14,9 +14,10 @@ match .comments[.tags.type == 'file' || .tags.type == 'overview' || .tags.type =
     apply .tags[.type == 'version'] item-tag
 
     "\n\n"
-    apply .tags[.type == 'copyright'] item-tag
-    "\n\n"
     apply .tags[.type == 'author'] item-tag
+
+    "\n\n"
+    apply .tags[.type == 'copyright'] item-tag
 
 
     "\n\n"
@@ -43,6 +44,6 @@ match .tags[.type == 'copyright'] item-tag {
 }
 
 match .tags[.type == 'author'] item-tag {
-    "**Author**: "
+    "*Author*: "
     .description
 }
