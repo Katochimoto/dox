@@ -1,0 +1,7 @@
+
+
+
+Sample.prototype.test = function() {
+
+};
+
