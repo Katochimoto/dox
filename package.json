@@ -29,7 +29,8 @@
     },
     "dependencies": {
         "github-flavored-markdown": ">= 0.0.1",
-        "commander": "0.6.1"
+        "commander": "0.6.1",
+        "yate": "0.0.67"
     },
     "devDependencies": {
         "jscs": "1.0.5",

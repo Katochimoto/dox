@@ -1,0 +1,48 @@
+match / {
+
+    apply .comments item-comment
+
+}
+
+/**
+ * File description
+ */
+match .comments[.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview'] item-comment {
+    "##"
+    apply .tags[.type == 'file' || .type == 'overview' || .type == 'fileoverview'] item-tag
+
+    apply .tags[.type == 'version'] item-tag
+
+    "\n\n"
+    apply .tags[.type == 'copyright'] item-tag
+    "\n\n"
+    apply .tags[.type == 'author'] item-tag
+
+
+    "\n\n"
+    apply .tags[.type == 'description'] item-tag
+    "\n\n"
+    .description.full
+}
+
+match .tags[.type == 'file' || .type == 'overview' || .type == 'fileoverview' || .type == 'description'] item-tag {
+    " "
+    .description
+}
+
+match .tags[.type == 'version'] item-tag {
+    " "
+    "`"
+    .description
+    "`"
+}
+
+match .tags[.type == 'copyright'] item-tag {
+    "&copy; "
+    .description
+}
+
+match .tags[.type == 'author'] item-tag {
+    "**Author**: "
+    .description
+}

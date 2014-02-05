@@ -1,0 +1,25 @@
+/**
+ * StackEdit stores your documents in your browser,
+ * which means all your documents are automatically saved locally and are accessible offline!
+ *
+ * @file Sample file
+ * @overview Sample overview
+ * @fileoverview Sample fileoverview
+ * @description Sample page description
+ * @copyright Rikishi 2014
+ * @author Rikishi
+ * @version 1.2.3
+ */
+
+
+/**
+ * Sample description
+ *
+ * Big big text description.
+ */
+function Sample() {
+
+}
+
+
+

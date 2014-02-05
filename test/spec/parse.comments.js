@@ -1,12 +1,12 @@
-describe('parse.comment', function() {
+describe('parse.comments', function() {
     /* global __dirname */
 
-    var parse = require('../../lib/mdox').parse;
+    var parse = require('../../lib/parse.comments').parse;
     var expect = require('expect.js');
     var fs = require('fs');
 
     function fixture(name, fn) {
-        fs.readFile(__dirname + '/parse.mdox/' + name + '.txt', 'utf8', fn);
+        fs.readFile(__dirname + '/parse.comments/' + name + '.txt', 'utf8', fn);
     }
 
     it('empty comments', function() {
