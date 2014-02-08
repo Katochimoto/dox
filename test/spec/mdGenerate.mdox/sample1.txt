@@ -3,8 +3,6 @@
  * which means all your documents are automatically saved locally and are accessible offline!
  *
  * @file Sample file
- * @overview Sample overview
- * @fileoverview Sample fileoverview
  * @description Sample page description
  * @copyright Rikishi 2014
  * @author Rikishi
@@ -12,14 +10,36 @@
  */
 
 
+ /**
+  * Sample module description
+  * @module {jQuery} SampleModule
+  */
+
+
 /**
- * Sample description
+ * Sample class description
  *
- * Big big text description.
+ * @class
+ * @classdesc Class description
+ * @description Tag description
+ * @desc Tag desc
  */
-function Sample() {
+function SampleClass() {
 
 }
+
+
+/**
+ * Sample method description
+ *
+ * @method
+ * @memberof SampleClass
+ * @static
+ * @return {Object}
+ */
+SampleClass.prototype.sampleFunction = function() {
+
+};
 
 
 

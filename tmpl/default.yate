@@ -1,3 +1,6 @@
+module "default"
+import "mdox"
+
 match / {
 
     apply .comments[!(.ignore)] item-comment
@@ -7,9 +10,14 @@ match / {
 /**
  * File description
  */
-match .comments[.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview'] item-comment {
-    "##"
-    apply .tags[.type == 'file' || .type == 'overview' || .type == 'fileoverview'] item-tag
+match .comments[
+    .tags.type == 'file' ||
+    .tags.type == 'overview' ||
+    .tags.type == 'fileoverview'
+] item-comment {
+
+    "# "
+    apply . mdox-file-name
 
     apply .tags[.type == 'version'] item-tag
 
@@ -20,30 +28,264 @@ match .comments[.tags.type == 'file' || .tags.type == 'overview' || .tags.type =
     apply .tags[.type == 'copyright'] item-tag
 
 
+    description = (
+        apply .tags[.type == 'desc'] item-tag
+        "\n\n"
+        apply .tags[.type == 'description'] item-tag
+        "\n\n"
+        .description.full
+    )
+
+
     "\n\n"
-    apply .tags[.type == 'description'] item-tag
+
+    mdox-string-trim(description)
+
     "\n\n"
-    .description.full
 }
 
-match .tags[.type == 'file' || .type == 'overview' || .type == 'fileoverview' || .type == 'description'] item-tag {
-    " "
-    .description
+
+/**
+ * Function description
+ */
+match .comments[
+    .tags.type == 'method' ||
+    .tags.type == 'function' ||
+    .tags.type == 'func' ||
+    .tags.type == 'callback' ||
+    .tags.type == 'constructs' ||
+    .ctx.type == 'method' ||
+    .ctx.type == 'function'
+] item-comment {
+
+    context = (
+        if (.ctx[.type == 'method'].cons) {
+            .ctx[.type == 'method'].cons
+        } else if (.ctx[.type == 'method'].receiver) {
+            .ctx[.type == 'method'].receiver
+        } else {
+            ""
+        }
+    )
+
+    contextSep = (
+        if (!mdox-string-empty(context)) {
+            " *"
+            context
+            if (.tags[.type == 'static']) {
+                ":"
+            } else {
+                "."
+            }
+            "*"
+        } else {
+            ""
+        }
+    )
+
+    name = (
+        " **"
+        if (.tags[.type == 'name'].name) {
+            .tags[.type == 'name'].name
+
+        } else if (.ctx[.type == 'method'].name) {
+            .ctx[.type == 'method'].name
+
+        } else if (.ctx[.type == 'function'].name) {
+            .ctx[.type == 'function'].name
+
+        }
+        "**"
+    )
+
+    returnTypes = (
+        apply . mdox-tag-types ('return')
+        apply . mdox-tag-types ('returns')
+    )
+
+    description = (
+        apply .tags[.type == 'desc'] item-tag
+        "\n\n"
+        apply .tags[.type == 'description'] item-tag
+        "\n\n"
+        .description.full
+    )
+
+
+
+
+
+    "####"
+    contextSep
+    name
+
+    " ("
+
+    ")"
+
+    if (!mdox-string-empty(returnTypes)) {
+        " `"
+        returnTypes
+        "`"
+    }
+
+    "\n\n"
+
+    mdox-string-trim(description)
+
+    "\n\n"
+
+        // name
+        // alias
+        // deprecated
+        // example
+        // emits
+        // fires
+        // global
+        // ignore
+        // param
+        // arg
+        // argument
+        // private
+        // protected
+        // public
+        // access
+        // returns
+        // static
+        // memberof
+        // memberOf
+        // summary
+        // this
+        // throws
+
 }
 
-match .tags[.type == 'version'] item-tag {
-    " "
-    "`"
-    .description
-    "`"
+
+/**
+ * Class description
+ */
+match .comments[
+    .tags.type == 'class' ||
+    .tags.type == 'classdesc' ||
+    .tags.type == 'constructor' ||
+    .tags.type == 'namespace' ||
+    .tags.type == 'mixin' ||
+    .tags.type == 'lends'
+] item-comment {
+
+    name = (
+        " *"
+        if (.tags[.type == 'class'].name) {
+            .tags[.type == 'class'].name
+
+        } else if (.tags[.type == 'constructor'].name) {
+            .tags[.type == 'constructor'].name
+
+        } else if (.tags[.type == 'namespace'].name) {
+            .tags[.type == 'namespace'].name
+
+        } else if (.tags[.type == 'mixin'].name) {
+            .tags[.type == 'mixin'].name
+
+        } else if (.ctx[.type == 'function'].name) {
+            .ctx[.type == 'function'].name
+
+        } else {
+            "Undefined"
+        }
+        "*"
+    )
+
+    types = (
+        apply . mdox-tag-types ('class')
+        apply . mdox-tag-types ('constructor')
+        apply . mdox-tag-types ('namespace')
+    )
+
+    description = (
+        apply .tags[.type == 'classdesc'] item-tag
+        "\n\n"
+        apply .tags[.type == 'desc'] item-tag
+        "\n\n"
+        apply .tags[.type == 'description'] item-tag
+        "\n\n"
+        .description.full
+    )
+
+
+
+    "###"
+    name
+
+    if (!mdox-string-empty(types)) {
+        " `"
+        types
+        "`"
+    }
+
+
+
+    "\n\n"
+
+    mdox-string-trim(description)
+
+    "\n\n"
+
+    // augments
+    // extends
+    // mixes
+    // name
+    // deprecated
+    // example
+    // global
+    // summary
 }
 
-match .tags[.type == 'copyright'] item-tag {
-    "&copy; "
-    .description
+
+/**
+ * Module description
+ */
+match .comments[
+    .tags.type == 'module'
+] item-comment {
+
+    types = (
+        apply . mdox-tag-types ('module')
+    )
+
+    "## "
+    apply .tags[.type == 'module'] item-tag
+
+    if (!mdox-string-empty(types)) {
+        " `"
+        types
+        "`"
+    }
+
+    description = (
+        apply .tags[.type == 'desc'] item-tag
+        "\n\n"
+        apply .tags[.type == 'description'] item-tag
+        "\n\n"
+        .description.full
+    )
+
+    "\n\n"
+
+    mdox-string-trim(description)
+
+    "\n\n"
+
+    // example
 }
 
-match .tags[.type == 'author'] item-tag {
-    "*Author*: "
-    .description
-}
+
+        // event
+        // instance
+        // property
+        // enum
+        // member
+        // readonly
+        // typedef
+        // http://usejsdoc.org/tags-kind.html
+

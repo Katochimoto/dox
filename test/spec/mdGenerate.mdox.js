@@ -6,7 +6,11 @@ describe('mdGenerate.mdox', function() {
     var fs = require('fs');
 
     function fixture(name, fn) {
-        fs.readFile(__dirname + '/mdGenerate.mdox/' + name + '.txt', 'utf8', fn);
+        var str = fs.readFileSync(__dirname + '/mdGenerate.mdox/' + name + '.txt', {
+            encoding: 'utf8'
+        });
+
+        fn(null, str);
     }
 
     it('empty comments', function() {
