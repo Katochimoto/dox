@@ -16,17 +16,21 @@ match .comments[
     .tags.type == 'fileoverview'
 ] item-comment {
 
-    "# "
-    apply . mdox-file-name
+    name = (
+        " "
+        if (.tags[.type == 'file'].description) {
+            .tags[.type == 'file'].description
 
-    apply .tags[.type == 'version'] item-tag
+        } else if (.tags[.type == 'overview'].description) {
+            .tags[.type == 'overview'].description
 
-    "\n\n"
-    apply .tags[.type == 'author'] item-tag
+        } else if (.tags[.type == 'fileoverview'].description) {
+            .tags[.type == 'fileoverview'].description
 
-    "\n\n"
-    apply .tags[.type == 'copyright'] item-tag
-
+        } else {
+            "Undefined"
+        }
+    )
 
     description = (
         apply .tags[.type == 'desc'] item-tag
@@ -35,6 +39,17 @@ match .comments[
         "\n\n"
         .description.full
     )
+
+    "#"
+    name
+
+    apply .tags[.type == 'version'] item-tag
+
+    "\n\n"
+    apply .tags[.type == 'author'] item-tag
+
+    "\n\n"
+    apply .tags[.type == 'copyright'] item-tag
 
 
     "\n\n"
@@ -253,14 +268,10 @@ match .comments[
         apply . mdox-tag-types ('module')
     )
 
-    "## "
-    apply .tags[.type == 'module'] item-tag
-
-    if (!mdox-string-empty(types)) {
-        " `"
-        types
-        "`"
-    }
+    name = (
+        " "
+        .tags[.type == 'module'].name
+    )
 
     description = (
         apply .tags[.type == 'desc'] item-tag
@@ -269,6 +280,19 @@ match .comments[
         "\n\n"
         .description.full
     )
+
+
+
+    "##"
+    name
+
+    if (!mdox-string-empty(types)) {
+        " `"
+        types
+        "`"
+    }
+
+
 
     "\n\n"
 

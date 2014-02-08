@@ -3,21 +3,6 @@ module "mdox"
 external scalar mdox-string-trim(scalar)
 external boolean mdox-string-empty(scalar)
 
-match .* mdox-file-name {
-    if (.tags[.type == 'file'].description) {
-        .tags[.type == 'file'].description
-
-    } else if (.tags[.type == 'overview'].description) {
-        .tags[.type == 'overview'].description
-
-    } else if (.tags[.type == 'fileoverview'].description) {
-        .tags[.type == 'fileoverview'].description
-
-    } else {
-        "Undefined"
-    }
-}
-
 match .* mdox-tag-types (name) {
     for (.tags[.type == name].types) {
         if (index() != 0) {
