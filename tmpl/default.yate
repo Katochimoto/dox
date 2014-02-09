@@ -115,7 +115,22 @@ match .comments[
             "~~"
         }
 
-        if (.tags[.type == 'name'].name) {
+        if (.tags[.type == 'constructs'].name) {
+            .tags[.type == 'constructs'].name
+
+        } else if (.tags[.type == 'callback'].name) {
+            .tags[.type == 'callback'].name
+
+        } else if (.tags[.type == 'func'].name) {
+            .tags[.type == 'func'].name
+
+        } else if (.tags[.type == 'function'].name) {
+            .tags[.type == 'function'].name
+
+        } else if (.tags[.type == 'method'].name) {
+            .tags[.type == 'method'].name
+
+        } else if (.tags[.type == 'name'].name) {
             .tags[.type == 'name'].name
 
         } else if (.ctx[.type == 'method'].name) {
@@ -342,8 +357,6 @@ match .comments[
 
         // name
         // alias
-        // emits
-        // fires
         // global
         // ignore
 
