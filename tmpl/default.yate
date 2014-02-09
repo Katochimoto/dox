@@ -244,6 +244,12 @@ match .comments[
             " "
             apply . mdox-tag-types-str
 
+            if (.nonNullable) {
+                " `non nullable`"
+            } else if (.nullable) {
+                " `nullable`"
+            }
+
             if (.optional) {
                 "]"
             }
