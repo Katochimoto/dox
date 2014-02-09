@@ -3,7 +3,7 @@ import "mdox"
 
 match / {
 
-    apply .comments[!(.ignore)] item-comment
+    apply .comments[!(.ignore) && .tags.type != 'ignore'] item-comment
 
     "\n\n[TOC]\n\n"
 }
@@ -370,7 +370,6 @@ match .comments[
 
     "\n\n"
 
-        // alias
         // global
         // ignore
 

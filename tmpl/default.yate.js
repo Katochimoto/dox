@@ -23,16 +23,16 @@ var yr = yr || require('yate/lib/runtime.js');
 
     var j1 = [ 0, 'ignore' ];
 
+    var j2 = [ 0, 'tags', 0, 'type' ];
+
     function p0(m, c0, i0, l0) {
-        return !nodeset2boolean( (selectNametest('ignore', c0, [])) );
+        return !nodeset2boolean( (selectNametest('ignore', c0, [])) ) && !(cmpSN("ignore", m.s(j2, c0)));
     }
 
-    var j2 = [ 0, 'comments', 2, p0 ];
-
-    var j3 = [ 0, 'tags', 0, 'type' ];
+    var j3 = [ 0, 'comments', 2, p0 ];
 
     function p1(m, c0, i0, l0) {
-        return cmpSN("file", m.s(j3, c0)) || cmpSN("overview", m.s(j3, c0)) || cmpSN("fileoverview", m.s(j3, c0));
+        return cmpSN("file", m.s(j2, c0)) || cmpSN("overview", m.s(j2, c0)) || cmpSN("fileoverview", m.s(j2, c0));
     }
 
     var j4 = [ 0, 'comments', 2, p1 ];
@@ -92,7 +92,7 @@ var yr = yr || require('yate/lib/runtime.js');
     var j15 = [ 0, 'ctx', 0, 'type' ];
 
     function p10(m, c0, i0, l0) {
-        return cmpSN("method", m.s(j3, c0)) || cmpSN("function", m.s(j3, c0)) || cmpSN("func", m.s(j3, c0)) || cmpSN("callback", m.s(j3, c0)) || cmpSN("constructs", m.s(j3, c0)) || cmpSN("method", m.s(j15, c0)) || cmpSN("function", m.s(j15, c0));
+        return cmpSN("method", m.s(j2, c0)) || cmpSN("function", m.s(j2, c0)) || cmpSN("func", m.s(j2, c0)) || cmpSN("callback", m.s(j2, c0)) || cmpSN("constructs", m.s(j2, c0)) || cmpSN("method", m.s(j15, c0)) || cmpSN("function", m.s(j15, c0));
     }
 
     var j16 = [ 0, 'comments', 2, p10 ];
@@ -240,7 +240,7 @@ var yr = yr || require('yate/lib/runtime.js');
     var j45 = [ 0, 'tags', 2, p31, 0, 'name' ];
 
     function p32(m, c0, i0, l0) {
-        return cmpSN("class", m.s(j3, c0)) || cmpSN("classdesc", m.s(j3, c0)) || cmpSN("constructor", m.s(j3, c0)) || cmpSN("namespace", m.s(j3, c0)) || cmpSN("mixin", m.s(j3, c0)) || cmpSN("lends", m.s(j3, c0));
+        return cmpSN("class", m.s(j2, c0)) || cmpSN("classdesc", m.s(j2, c0)) || cmpSN("constructor", m.s(j2, c0)) || cmpSN("namespace", m.s(j2, c0)) || cmpSN("mixin", m.s(j2, c0)) || cmpSN("lends", m.s(j2, c0));
     }
 
     var j46 = [ 0, 'comments', 2, p32 ];
@@ -276,7 +276,7 @@ var yr = yr || require('yate/lib/runtime.js');
     var j51 = [ 0, 'tags', 2, p37 ];
 
     function p38(m, c0, i0, l0) {
-        return cmpSN("module", m.s(j3, c0));
+        return cmpSN("module", m.s(j2, c0));
     }
 
     var j52 = [ 0, 'comments', 2, p38 ];
@@ -291,7 +291,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t0 = function t0(m, c0, i0, l0, a0) {
         var r0 = '';
 
-        r0 += m.a(m, m.s(j2, c0), 'item-comment', a0)
+        r0 += m.a(m, m.s(j3, c0), 'item-comment', a0)
         r0 += closeAttrs(a0);
         r0 += "\n\n[TOC]\n\n";
 
