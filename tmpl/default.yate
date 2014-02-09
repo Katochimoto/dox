@@ -223,6 +223,19 @@ match .comments[
         }
     )
 
+    fires-description = (
+        for (.tags[.type == 'fires' || .type == 'emits']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+
+            html(">")
+            " - "
+
+            .description
+        }
+    )
+
 
 
     example = (
@@ -274,6 +287,14 @@ match .comments[
     mdox-string-trim(description)
 
 
+    if (!mdox-string-empty(access)) {
+        "\n\n"
+        html(">")
+        " *Access:* "
+        "`"
+        access
+        "`"
+    }
 
     if (!mdox-string-empty(args-description)) {
         "\n\n"
@@ -291,15 +312,6 @@ match .comments[
         return-description
     }
 
-    if (!mdox-string-empty(access)) {
-        "\n\n"
-        html(">")
-        " *Access:* "
-        "`"
-        access
-        "`"
-    }
-
     if (!mdox-string-empty(throws-description)) {
         "\n\n"
         html(">")
@@ -307,6 +319,15 @@ match .comments[
         "\n\n"
         throws-description
     }
+
+    if (!mdox-string-empty(fires-description)) {
+        "\n\n"
+        html(">")
+        " *Fires:*"
+        "\n\n"
+        fires-description
+    }
+
 
     if (!mdox-string-empty(example)) {
         "\n\n"
@@ -326,8 +347,6 @@ match .comments[
         // global
         // ignore
 
-
-        // summary
         // this
 
 }
