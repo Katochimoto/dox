@@ -35,9 +35,12 @@ function SampleClass() {
  * @method
  * @memberof SampleClass
  * @static
- * @return {Object}
+ * @param {String|Boolean} a description a
+ * @arg {Object} b description b
+ * @argument {Array} c
+ * @return {Object} description return
  */
-SampleClass.prototype.sampleFunction = function() {
+SampleClass.prototype.sampleFunction = function(a, b, c) {
 
 };
 

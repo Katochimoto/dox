@@ -83,7 +83,7 @@ match .comments[
         }
     )
 
-    contextSep = (
+    context-sep = (
         if (!mdox-string-empty(context)) {
             " *"
             context
@@ -113,9 +113,11 @@ match .comments[
         "**"
     )
 
-    returnTypes = (
-        apply . mdox-tag-types ('return')
-        apply . mdox-tag-types ('returns')
+    types = (
+        apply . mdox-tag-types ([
+            'return'
+            'returns'
+        ])
     )
 
     description = (
@@ -126,27 +128,96 @@ match .comments[
         .description.full
     )
 
+    args = (
+        for (.tags[.type == 'param' || .type == 'arg' || .type == 'argument']) {
+            if (index() != 0) {
+                ", "
+            }
+            apply . mdox-tag-types-str
+            " "
+            .name
+        }
+    )
+
+    args-description = (
+        for (.tags[.type == 'param' || .type == 'arg' || .type == 'argument']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+
+            html(">")
+            " - "
+
+            .name
+
+            " "
+            apply . mdox-tag-types-str
+
+            if (.description) {
+                " : "
+                .description
+            }
+        }
+    )
+
+    return-rescription = (
+        for (.tags[.type == 'return' || .type == 'returns']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+
+            html(">")
+            " - "
+
+            apply . mdox-tag-types-str
+
+            if (.description) {
+                " : "
+                .description
+            }
+        }
+    )
+
 
 
 
 
     "####"
-    contextSep
+    context-sep
     name
 
     " ("
 
+    args
+
     ")"
 
-    if (!mdox-string-empty(returnTypes)) {
-        " `"
-        returnTypes
-        "`"
-    }
+    " "
+    types
 
     "\n\n"
 
     mdox-string-trim(description)
+
+
+
+    if (!mdox-string-empty(args-description)) {
+        "\n\n"
+        html(">")
+        " *Arguments*"
+        "\n\n"
+        args-description
+    }
+
+    if (!mdox-string-empty(return-rescription)) {
+        "\n\n"
+        html(">")
+        " *Returns*"
+        "\n\n"
+        return-rescription
+    }
+
+
 
     "\n\n"
 
@@ -158,9 +229,9 @@ match .comments[
         // fires
         // global
         // ignore
-        // param
-        // arg
-        // argument
+
+
+
         // private
         // protected
         // public
@@ -212,9 +283,11 @@ match .comments[
     )
 
     types = (
-        apply . mdox-tag-types ('class')
-        apply . mdox-tag-types ('constructor')
-        apply . mdox-tag-types ('namespace')
+        apply . mdox-tag-types ([
+            'class'
+            'constructor'
+            'namespace'
+        ])
     )
 
     description = (
@@ -232,11 +305,8 @@ match .comments[
     "###"
     name
 
-    if (!mdox-string-empty(types)) {
-        " `"
-        types
-        "`"
-    }
+    " "
+    types
 
 
 
@@ -265,7 +335,9 @@ match .comments[
 ] item-comment {
 
     types = (
-        apply . mdox-tag-types ('module')
+        apply . mdox-tag-types ([
+            'module'
+        ])
     )
 
     name = (
@@ -286,11 +358,8 @@ match .comments[
     "##"
     name
 
-    if (!mdox-string-empty(types)) {
-        " `"
-        types
-        "`"
-    }
+    " "
+    types
 
 
 

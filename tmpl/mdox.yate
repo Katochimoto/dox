@@ -2,13 +2,26 @@ module "mdox"
 
 external scalar mdox-string-trim(scalar)
 external boolean mdox-string-empty(scalar)
+external boolean mdox-array-inarray(scalar, array)
 
-match .* mdox-tag-types (name) {
-    for (.tags[.type == name].types) {
-        if (index() != 0) {
-            "|"
+match .* mdox-tag-types (array tags) {
+    apply .tags[mdox-array-inarray(.type, tags)] mdox-tag-types-str
+}
+
+match .* mdox-tag-types-str {
+    str = (
+        for (.types) {
+            if (index() != 0) {
+                "|"
+            }
+            .
         }
-        .
+    )
+
+    if (!mdox-string-empty(str)) {
+        "`"
+        str
+        "`"
     }
 }
 
