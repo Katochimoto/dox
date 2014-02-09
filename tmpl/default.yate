@@ -282,6 +282,12 @@ match .comments[
         }
     )
 
+    alias = (
+        if (.tags[.type == 'alias'].name) {
+            .tags[.type == 'alias'].name
+        }
+    )
+
 
 
     "####"
@@ -308,6 +314,15 @@ match .comments[
         " *Access:* "
         "`"
         access
+        "`"
+    }
+
+    if (!mdox-string-empty(alias)) {
+        "\n\n"
+        html(">")
+        " *Alias:* "
+        "`"
+        alias
         "`"
     }
 
@@ -355,7 +370,6 @@ match .comments[
 
     "\n\n"
 
-        // name
         // alias
         // global
         // ignore

@@ -293,4 +293,12 @@ describe('parse.tag @param', function() {
         expect(tag.types).to.have.length(1);
         expect(tag.types).to.eql([ '*' ]);
     });
+
+    it('param dot', function() {
+        var tag = parse('@param    test1.test2   ');
+        expect(tag).to.be.a(Object);
+        expect(tag).to.only.have.keys('type', 'name');
+        expect(tag.type).to.be('param');
+        expect(tag.name).to.be('test1.test2');
+    });
 });
