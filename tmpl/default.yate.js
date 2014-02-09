@@ -252,52 +252,58 @@ var yr = yr || require('yate/lib/runtime.js');
     var j47 = [ 0, 'tags', 2, p33, 0, 'name' ];
 
     function p34(m, c0, i0, l0) {
+        return cmpSN("this", selectNametest('type', c0, []));
+    }
+
+    var j48 = [ 0, 'tags', 2, p34, 0, 'name' ];
+
+    function p35(m, c0, i0, l0) {
         return cmpSN("class", m.s(j2, c0)) || cmpSN("classdesc", m.s(j2, c0)) || cmpSN("constructor", m.s(j2, c0)) || cmpSN("namespace", m.s(j2, c0)) || cmpSN("mixin", m.s(j2, c0)) || cmpSN("lends", m.s(j2, c0));
     }
 
-    var j48 = [ 0, 'comments', 2, p34 ];
-
-    function p35(m, c0, i0, l0) {
-        return cmpSN("constructor", selectNametest('type', c0, []));
-    }
-
-    var j49 = [ 0, 'tags', 2, p35, 0, 'name' ];
+    var j49 = [ 0, 'comments', 2, p35 ];
 
     function p36(m, c0, i0, l0) {
-        return cmpSN("namespace", selectNametest('type', c0, []));
+        return cmpSN("constructor", selectNametest('type', c0, []));
     }
 
     var j50 = [ 0, 'tags', 2, p36, 0, 'name' ];
 
     function p37(m, c0, i0, l0) {
-        return cmpSN("mixin", selectNametest('type', c0, []));
+        return cmpSN("namespace", selectNametest('type', c0, []));
     }
 
     var j51 = [ 0, 'tags', 2, p37, 0, 'name' ];
 
     function p38(m, c0, i0, l0) {
-        return cmpSN("class", selectNametest('type', c0, []));
+        return cmpSN("mixin", selectNametest('type', c0, []));
     }
 
     var j52 = [ 0, 'tags', 2, p38, 0, 'name' ];
 
     function p39(m, c0, i0, l0) {
+        return cmpSN("class", selectNametest('type', c0, []));
+    }
+
+    var j53 = [ 0, 'tags', 2, p39, 0, 'name' ];
+
+    function p40(m, c0, i0, l0) {
         return cmpSN("classdesc", selectNametest('type', c0, []));
     }
 
-    var j53 = [ 0, 'tags', 2, p39 ];
+    var j54 = [ 0, 'tags', 2, p40 ];
 
-    function p40(m, c0, i0, l0) {
+    function p41(m, c0, i0, l0) {
         return cmpSN("module", m.s(j2, c0));
     }
 
-    var j54 = [ 0, 'comments', 2, p40 ];
+    var j55 = [ 0, 'comments', 2, p41 ];
 
-    function p41(m, c0, i0, l0) {
+    function p42(m, c0, i0, l0) {
         return cmpSN("module", selectNametest('type', c0, []));
     }
 
-    var j55 = [ 0, 'tags', 2, p41, 0, 'name' ];
+    var j56 = [ 0, 'tags', 2, p42, 0, 'name' ];
 
     // match /
     M.t0 = function t0(m, c0, i0, l0, a0) {
@@ -595,6 +601,13 @@ var yr = yr || require('yate/lib/runtime.js');
         }
         var v15 = r1;
 
+        //  var this-type : nodeset
+        var r1 = [];
+        if (nodeset2boolean( (m.s(j48, c0)) )) {
+            r1 = m.s(j48, c0);
+        }
+        var v16 = r1;
+
         r0 += closeAttrs(a0);
         r0 += "####";
         r0 += scalar2xml( v4 );
@@ -620,6 +633,14 @@ var yr = yr || require('yate/lib/runtime.js');
             r0 += " *Alias:* ";
             r0 += "`";
             r0 += nodeset2xml( v15 );
+            r0 += "`";
+        }
+        if ((!(yr.externals['mdox-string-empty'])(nodeset2scalar( v16 )))) {
+            r0 += "\n\n";
+            r0 += ">";
+            r0 += " *This:* ";
+            r0 += "`";
+            r0 += nodeset2xml( v16 );
             r0 += "`";
         }
         if ((!(yr.externals['mdox-string-empty'])(xml2scalar( v10 )))) {
@@ -668,23 +689,23 @@ var yr = yr || require('yate/lib/runtime.js');
         var r0 = '';
 
         //  var is-deprecated : boolean
-        var v16 = nodeset2boolean( m.s(j19, c0) );
+        var v17 = nodeset2boolean( m.s(j19, c0) );
 
         //  var name : scalar
         var r1 = '';
         var a1 = { a: {} };
         r1 += " *";
-        if ((v16)) {
+        if ((v17)) {
             r1 += "~~";
         }
-        if (nodeset2boolean( (m.s(j52, c0)) )) {
-            r1 += nodeset2scalar( m.s(j52, c0) );
-        } else if (nodeset2boolean( (m.s(j49, c0)) )) {
-            r1 += nodeset2scalar( m.s(j49, c0) );
+        if (nodeset2boolean( (m.s(j53, c0)) )) {
+            r1 += nodeset2scalar( m.s(j53, c0) );
         } else if (nodeset2boolean( (m.s(j50, c0)) )) {
             r1 += nodeset2scalar( m.s(j50, c0) );
         } else if (nodeset2boolean( (m.s(j51, c0)) )) {
             r1 += nodeset2scalar( m.s(j51, c0) );
+        } else if (nodeset2boolean( (m.s(j52, c0)) )) {
+            r1 += nodeset2scalar( m.s(j52, c0) );
         } else if (nodeset2boolean( (m.s(j29, c0)) )) {
             r1 += nodeset2scalar( m.s(j29, c0) );
         } else if (nodeset2boolean( (m.s(j31, c0)) )) {
@@ -692,11 +713,11 @@ var yr = yr || require('yate/lib/runtime.js');
         } else {
             r1 += "Undefined";
         }
-        if ((v16)) {
+        if ((v17)) {
             r1 += "~~";
         }
         r1 += "*";
-        var v17 = r1;
+        var v18 = r1;
 
         //  var types : xml
         var r1 = '';
@@ -710,16 +731,16 @@ var yr = yr || require('yate/lib/runtime.js');
 
             return r1;
         })())
-        var v18 = r1;
+        var v19 = r1;
 
         //  var description : xml
         var r1 = '';
         var a1 = { a: {} };
         r1 += m.a(m, m.s(j34, c0), 'item-tag', a1)
         r1 += closeAttrs(a1);
-        if (nodeset2boolean( (m.s(j53, c0)) )) {
+        if (nodeset2boolean( (m.s(j54, c0)) )) {
             r1 += "\n\n";
-            r1 += m.a(m, m.s(j53, c0), 'item-tag', a1)
+            r1 += m.a(m, m.s(j54, c0), 'item-tag', a1)
         }
         if (nodeset2boolean( (m.s(j11, c0)) )) {
             r1 += "\n\n";
@@ -733,7 +754,7 @@ var yr = yr || require('yate/lib/runtime.js');
             r1 += "\n\n";
             r1 += nodeset2xml( m.s(j13, c0) );
         }
-        var v19 = r1;
+        var v20 = r1;
 
         //  var example : scalar
         var r1 = '';
@@ -750,26 +771,26 @@ var yr = yr || require('yate/lib/runtime.js');
             r1 += simpleScalar('description', c1);
             r1 += "\n```";
         }
-        var v20 = r1;
+        var v21 = r1;
 
         r0 += closeAttrs(a0);
         r0 += "###";
-        r0 += scalar2xml( v17 );
+        r0 += scalar2xml( v18 );
         r0 += " ";
-        r0 += v18;
+        r0 += v19;
         r0 += "\n\n";
-        r0 += scalar2xml( (yr.externals['mdox-string-trim'])(xml2scalar( v19 )) );
-        if ((!(yr.externals['mdox-string-empty'])(v20))) {
+        r0 += scalar2xml( (yr.externals['mdox-string-trim'])(xml2scalar( v20 )) );
+        if ((!(yr.externals['mdox-string-empty'])(v21))) {
             r0 += "\n\n";
             r0 += "##### **Example**";
             r0 += "\n\n";
-            r0 += scalar2xml( v20 );
+            r0 += scalar2xml( v21 );
         }
         r0 += "\n\n";
 
         return r0;
     };
-    M.t3.j = j48;
+    M.t3.j = j49;
     M.t3.a = 0;
 
     // match .comments[ .tags.type == "module" ] : item-comment
@@ -777,7 +798,7 @@ var yr = yr || require('yate/lib/runtime.js');
         var r0 = '';
 
         //  var is-deprecated : boolean
-        var v21 = nodeset2boolean( m.s(j19, c0) );
+        var v22 = nodeset2boolean( m.s(j19, c0) );
 
         //  var types : xml
         var r1 = '';
@@ -789,20 +810,20 @@ var yr = yr || require('yate/lib/runtime.js');
 
             return r1;
         })())
-        var v22 = r1;
+        var v23 = r1;
 
         //  var name : scalar
         var r1 = '';
         var a1 = { a: {} };
         r1 += " ";
-        if ((v21)) {
+        if ((v22)) {
             r1 += "~~";
         }
-        r1 += nodeset2scalar( m.s(j55, c0) );
-        if ((v21)) {
+        r1 += nodeset2scalar( m.s(j56, c0) );
+        if ((v22)) {
             r1 += "~~";
         }
-        var v23 = r1;
+        var v24 = r1;
 
         //  var description : xml
         var r1 = '';
@@ -813,7 +834,7 @@ var yr = yr || require('yate/lib/runtime.js');
         r1 += m.a(m, m.s(j12, c0), 'item-tag', a1)
         r1 += "\n\n";
         r1 += nodeset2xml( m.s(j13, c0) );
-        var v24 = r1;
+        var v25 = r1;
 
         //  var example : scalar
         var r1 = '';
@@ -830,26 +851,26 @@ var yr = yr || require('yate/lib/runtime.js');
             r1 += simpleScalar('description', c1);
             r1 += "\n```";
         }
-        var v25 = r1;
+        var v26 = r1;
 
         r0 += closeAttrs(a0);
         r0 += "##";
-        r0 += scalar2xml( v23 );
+        r0 += scalar2xml( v24 );
         r0 += " ";
-        r0 += v22;
+        r0 += v23;
         r0 += "\n\n";
-        r0 += scalar2xml( (yr.externals['mdox-string-trim'])(xml2scalar( v24 )) );
-        if ((!(yr.externals['mdox-string-empty'])(v25))) {
+        r0 += scalar2xml( (yr.externals['mdox-string-trim'])(xml2scalar( v25 )) );
+        if ((!(yr.externals['mdox-string-empty'])(v26))) {
             r0 += "\n\n";
             r0 += "##### **Example**";
             r0 += "\n\n";
-            r0 += scalar2xml( v25 );
+            r0 += scalar2xml( v26 );
         }
         r0 += "\n\n";
 
         return r0;
     };
-    M.t4.j = j54;
+    M.t4.j = j55;
     M.t4.a = 0;
 
     M.matcher = {

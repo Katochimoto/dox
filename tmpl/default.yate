@@ -307,6 +307,12 @@ match .comments[
         }
     )
 
+    this-type = (
+        if (.tags[.type == 'this'].name) {
+            .tags[.type == 'this'].name
+        }
+    )
+
 
 
     "####"
@@ -342,6 +348,15 @@ match .comments[
         " *Alias:* "
         "`"
         alias
+        "`"
+    }
+
+    if (!mdox-string-empty(this-type)) {
+        "\n\n"
+        html(">")
+        " *This:* "
+        "`"
+        this-type
         "`"
     }
 

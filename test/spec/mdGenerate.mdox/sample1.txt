@@ -59,6 +59,7 @@ function SampleClass() {
  * @access public
  * @throws {Error} free-form description
  * @fires Milkshake#drain
+ * @this jQuery
  */
 SampleClass.prototype.sampleFunction = function(a, b, c) {
 
