@@ -202,7 +202,7 @@ describe('parse.comment', function() {
             expect(comment.tags).to.be.a(Array);
             expect(comment.tags).to.have.length(2);
             expect(comment.tags).to.eql([
-                { type: 'param', types: [ 'String' ], name: 'test' },
+                { type: 'param', types: [ 'String' ], name: 'test', original: 'test' },
                 { type: 'return', types: [ 'Boolean' ] }
             ]);
 
