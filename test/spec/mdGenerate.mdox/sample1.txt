@@ -52,8 +52,8 @@ function SampleClass() {
  * @memberof Qwe
  * @static
  * @param {String|Boolean} a description a
- * @arg {Object} b description b
- * @argument {Array} c
+ * @arg {Object} [b] description b
+ * @argument {Array} [c]
  * @return {Object} description return
  * @deprecated
  * @access public

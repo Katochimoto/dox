@@ -194,9 +194,17 @@ match .comments[
             if (index() != 0) {
                 ", "
             }
+            if (.optional) {
+                "["
+            }
+
             apply . mdox-tag-types-str
             " "
             .name
+
+            if (.optional) {
+                "]"
+            }
         }
     )
 
@@ -227,10 +235,18 @@ match .comments[
             html(">")
             " - "
 
+            if (.optional) {
+                "["
+            }
+
             .name
 
             " "
             apply . mdox-tag-types-str
+
+            if (.optional) {
+                "]"
+            }
 
             if (.description) {
                 " : "
