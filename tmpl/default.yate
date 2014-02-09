@@ -5,6 +5,7 @@ match / {
 
     apply .comments[!(.ignore)] item-comment
 
+    "\n\n[TOC]\n\n"
 }
 
 /**
@@ -73,11 +74,21 @@ match .comments[
     .ctx.type == 'function'
 ] item-comment {
 
+    is-deprecated = boolean(.tags[.type == 'deprecated'])
+
     context = (
-        if (.ctx[.type == 'method'].cons) {
+        if (.tags[.type == 'memberof'].parent) {
+            .tags[.type == 'memberof'].parent
+
+        } else if (.tags[.type == 'memberOf'].parent) {
+            .tags[.type == 'memberOf'].parent
+
+        } else if (.ctx[.type == 'method'].cons) {
             .ctx[.type == 'method'].cons
+
         } else if (.ctx[.type == 'method'].receiver) {
             .ctx[.type == 'method'].receiver
+
         } else {
             ""
         }
@@ -100,6 +111,10 @@ match .comments[
 
     name = (
         " **"
+        if (is-deprecated) {
+            "~~"
+        }
+
         if (.tags[.type == 'name'].name) {
             .tags[.type == 'name'].name
 
@@ -109,6 +124,10 @@ match .comments[
         } else if (.ctx[.type == 'function'].name) {
             .ctx[.type == 'function'].name
 
+        }
+
+        if (is-deprecated) {
+            "~~"
         }
         "**"
     )
@@ -139,6 +158,24 @@ match .comments[
         }
     )
 
+    throws-description = (
+        for (.tags[.type == 'throws' || .type == 'exception']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+
+            html(">")
+            " - "
+
+            apply . mdox-tag-types-str
+
+            if (.description) {
+                " : "
+                .description
+            }
+        }
+    )
+
     args-description = (
         for (.tags[.type == 'param' || .type == 'arg' || .type == 'argument']) {
             if (index() != 0) {
@@ -160,7 +197,7 @@ match .comments[
         }
     )
 
-    return-rescription = (
+    return-description = (
         for (.tags[.type == 'return' || .type == 'returns']) {
             if (index() != 0) {
                 "\n\n"
@@ -194,6 +231,22 @@ match .comments[
     )
 
 
+    access = (
+        if (.tags[.type == 'access'].access) {
+            .tags[.type == 'access'].access
+
+        } else if (.tags[.type == 'private']) {
+            "private"
+
+        } else if (.tags[.type == 'protected']) {
+            "protected"
+
+        } else if (.tags[.type == 'public']) {
+            "public"
+        }
+    )
+
+
 
     "####"
     context-sep
@@ -222,17 +275,34 @@ match .comments[
         args-description
     }
 
-    if (!mdox-string-empty(return-rescription)) {
+    if (!mdox-string-empty(return-description)) {
         "\n\n"
         html(">")
         " *Returns:*"
         "\n\n"
-        return-rescription
+        return-description
+    }
+
+    if (!mdox-string-empty(access)) {
+        "\n\n"
+        html(">")
+        " *Access:* "
+        "`"
+        access
+        "`"
+    }
+
+    if (!mdox-string-empty(throws-description)) {
+        "\n\n"
+        html(">")
+        " *Exceptions:*"
+        "\n\n"
+        throws-description
     }
 
     if (!mdox-string-empty(example)) {
         "\n\n"
-        "##### Example"
+        "##### **Example**"
         "\n\n"
         example
     }
@@ -243,26 +313,14 @@ match .comments[
 
         // name
         // alias
-        // deprecated
-        // example
         // emits
         // fires
         // global
         // ignore
 
 
-
-        // private
-        // protected
-        // public
-        // access
-        // returns
-        // static
-        // memberof
-        // memberOf
         // summary
         // this
-        // throws
 
 }
 
@@ -279,8 +337,14 @@ match .comments[
     .tags.type == 'lends'
 ] item-comment {
 
+    is-deprecated = boolean(.tags[.type == 'deprecated'])
+
     name = (
         " *"
+        if (is-deprecated) {
+            "~~"
+        }
+
         if (.tags[.type == 'class'].name) {
             .tags[.type == 'class'].name
 
@@ -298,6 +362,10 @@ match .comments[
 
         } else {
             "Undefined"
+        }
+
+        if (is-deprecated) {
+            "~~"
         }
         "*"
     )
@@ -320,6 +388,19 @@ match .comments[
         .description.full
     )
 
+    example = (
+        for (.tags[.type == 'example']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+            .title
+            "\n"
+            "```\n"
+            .description
+            "\n```"
+        }
+    )
+
 
 
     "###"
@@ -334,14 +415,19 @@ match .comments[
 
     mdox-string-trim(description)
 
+    if (!mdox-string-empty(example)) {
+        "\n\n"
+        "##### **Example**"
+        "\n\n"
+        example
+    }
+
     "\n\n"
 
     // augments
     // extends
     // mixes
     // name
-    // deprecated
-    // example
     // global
     // summary
 }
@@ -354,6 +440,8 @@ match .comments[
     .tags.type == 'module'
 ] item-comment {
 
+    is-deprecated = boolean(.tags[.type == 'deprecated'])
+
     types = (
         apply . mdox-tag-types ([
             'module'
@@ -362,7 +450,15 @@ match .comments[
 
     name = (
         " "
+        if (is-deprecated) {
+            "~~"
+        }
+
         .tags[.type == 'module'].name
+
+        if (is-deprecated) {
+            "~~"
+        }
     )
 
     description = (
@@ -371,6 +467,19 @@ match .comments[
         apply .tags[.type == 'description'] item-tag
         "\n\n"
         .description.full
+    )
+
+    example = (
+        for (.tags[.type == 'example']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+            .title
+            "\n"
+            "```\n"
+            .description
+            "\n```"
+        }
     )
 
 
@@ -387,9 +496,14 @@ match .comments[
 
     mdox-string-trim(description)
 
-    "\n\n"
+    if (!mdox-string-empty(example)) {
+        "\n\n"
+        "##### **Example**"
+        "\n\n"
+        example
+    }
 
-    // example
+    "\n\n"
 }
 
 

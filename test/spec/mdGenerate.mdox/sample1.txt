@@ -13,6 +13,7 @@
 /**
  * Sample module description
  * @module {jQuery} SampleModule
+ * @deprecated
  */
 
 
@@ -23,6 +24,7 @@
  * @classdesc Class description
  * @description Tag description
  * @desc Tag desc
+ * @deprecated
  */
 function SampleClass() {
 
@@ -45,12 +47,15 @@ function SampleClass() {
  * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
  *
  * @method
- * @memberof SampleClass
+ * @memberof Qwe
  * @static
  * @param {String|Boolean} a description a
  * @arg {Object} b description b
  * @argument {Array} c
  * @return {Object} description return
+ * @deprecated
+ * @access public
+ * @throws {Error} free-form description
  */
 SampleClass.prototype.sampleFunction = function(a, b, c) {
 
