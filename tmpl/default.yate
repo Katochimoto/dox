@@ -3,7 +3,26 @@ import "mdox"
 
 match / {
 
-    apply .comments[!(.ignore) && .tags.type != 'ignore'] item-comment
+    apply .comments[
+        !(.ignore) &&
+        .tags.type != 'ignore' &&
+        (.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview')
+    ] item-comment
+
+    apply .comments[
+        !(.ignore) &&
+        .tags.type != 'ignore' &&
+        .tags.type == 'global'
+    ] item-comment
+
+    apply .comments[
+        !(.ignore) &&
+        .tags.type != 'ignore' &&
+        .tags.type != 'global' &&
+        .tags.type != 'file' &&
+        .tags.type != 'overview' &&
+        .tags.type != 'fileoverview'
+    ] item-comment
 
     "\n\n[TOC]\n\n"
 }
@@ -370,9 +389,6 @@ match .comments[
 
     "\n\n"
 
-        // global
-        // ignore
-
         // this
 
 }
@@ -491,7 +507,6 @@ match .comments[
     // extends
     // mixes
     // name
-    // global
 }
 
 
