@@ -53,8 +53,8 @@ function SampleClass() {
  * @static
  * @param {String|Boolean} a description a
  * @arg {Object} [b] description b
- * @arg {Number} [b.qwe] description b.qwe
- * @arg {String} [b.asd] description b.asd
+ * @arg {Number} [b.qwe=123] description b.qwe
+ * @arg {String} [b.asd=asd] description b.asd
  * @argument {(number|boolean|array)} [c=[1,2,3]]
  * @return {Object} description return
  * @deprecated
