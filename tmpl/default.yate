@@ -190,7 +190,7 @@ match .comments[
     )
 
     args = (
-        for (.tags[.type == 'param' || .type == 'arg' || .type == 'argument']) {
+        for (.tags[(.type == 'param' || .type == 'arg' || .type == 'argument') && .original == .name]) {
             if (index() != 0) {
                 ", "
             }
@@ -246,6 +246,12 @@ match .comments[
 
             if (.optional) {
                 "]"
+            }
+
+            if (.default) {
+                " = ``"
+                .default
+                "``"
             }
 
             if (.description) {
