@@ -10,10 +10,10 @@
  */
 
 
- /**
-  * Sample module description
-  * @module {jQuery} SampleModule
-  */
+/**
+ * Sample module description
+ * @module {jQuery} SampleModule
+ */
 
 
 /**
@@ -31,6 +31,18 @@ function SampleClass() {
 
 /**
  * Sample method description
+ *
+ * @example <caption>Example usage of method1.</caption>
+ * // return { "zxc": 456 }
+ * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
+ *
+ * @example <caption>Example usage of method2.</caption>
+ * // return { "zxc": 456 }
+ * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
+ *
+ * @example
+ * // return { "zxc": 456 }
+ * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
  *
  * @method
  * @memberof SampleClass

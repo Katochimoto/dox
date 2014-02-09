@@ -180,6 +180,19 @@ match .comments[
 
 
 
+    example = (
+        for (.tags[.type == 'example']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+            .title
+            "\n"
+            "```\n"
+            .description
+            "\n```"
+        }
+    )
+
 
 
     "####"
@@ -204,7 +217,7 @@ match .comments[
     if (!mdox-string-empty(args-description)) {
         "\n\n"
         html(">")
-        " *Arguments*"
+        " *Arguments:*"
         "\n\n"
         args-description
     }
@@ -212,9 +225,16 @@ match .comments[
     if (!mdox-string-empty(return-rescription)) {
         "\n\n"
         html(">")
-        " *Returns*"
+        " *Returns:*"
         "\n\n"
         return-rescription
+    }
+
+    if (!mdox-string-empty(example)) {
+        "\n\n"
+        "##### Example"
+        "\n\n"
+        example
     }
 
 
