@@ -685,6 +685,8 @@ var yr = yr || require('yate/lib/runtime.js');
             r1 += nodeset2scalar( m.s(j50, c0) );
         } else if (nodeset2boolean( (m.s(j51, c0)) )) {
             r1 += nodeset2scalar( m.s(j51, c0) );
+        } else if (nodeset2boolean( (m.s(j29, c0)) )) {
+            r1 += nodeset2scalar( m.s(j29, c0) );
         } else if (nodeset2boolean( (m.s(j31, c0)) )) {
             r1 += nodeset2scalar( m.s(j31, c0) );
         } else {
