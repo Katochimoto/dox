@@ -140,11 +140,19 @@ match .comments[
     )
 
     description = (
-        apply .tags[.type == 'desc'] item-tag
-        "\n\n"
-        apply .tags[.type == 'description'] item-tag
-        "\n\n"
-        .description.full
+        apply .tags[.type == 'summary'] item-tag
+        if (.tags[.type == 'desc']) {
+            "\n\n"
+            apply .tags[.type == 'desc'] item-tag
+        }
+        if (.tags[.type == 'description']) {
+            "\n\n"
+            apply .tags[.type == 'description'] item-tag
+        }
+        if (.description.full) {
+            "\n\n"
+            .description.full
+        }
     )
 
     args = (
@@ -379,13 +387,23 @@ match .comments[
     )
 
     description = (
-        apply .tags[.type == 'classdesc'] item-tag
-        "\n\n"
-        apply .tags[.type == 'desc'] item-tag
-        "\n\n"
-        apply .tags[.type == 'description'] item-tag
-        "\n\n"
-        .description.full
+        apply .tags[.type == 'summary'] item-tag
+        if (.tags[.type == 'classdesc']) {
+            "\n\n"
+            apply .tags[.type == 'classdesc'] item-tag
+        }
+        if (.tags[.type == 'desc']) {
+            "\n\n"
+            apply .tags[.type == 'desc'] item-tag
+        }
+        if (.tags[.type == 'description']) {
+            "\n\n"
+            apply .tags[.type == 'description'] item-tag
+        }
+        if (.description.full) {
+            "\n\n"
+            .description.full
+        }
     )
 
     example = (
@@ -429,7 +447,6 @@ match .comments[
     // mixes
     // name
     // global
-    // summary
 }
 
 

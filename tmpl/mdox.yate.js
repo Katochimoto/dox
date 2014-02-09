@@ -28,7 +28,7 @@ var yr = yr || require('yate/lib/runtime.js');
     var j4 = [ 1, 0 ];
 
     function p1(m, c0, i0, l0) {
-        return cmpSN("classdesc", selectNametest('type', c0, [])) || cmpSN("description", selectNametest('type', c0, [])) || cmpSN("desc", selectNametest('type', c0, [])) || cmpSN("file", selectNametest('type', c0, [])) || cmpSN("overview", selectNametest('type', c0, [])) || cmpSN("fileoverview", selectNametest('type', c0, []));
+        return cmpSN("classdesc", selectNametest('type', c0, [])) || cmpSN("description", selectNametest('type', c0, [])) || cmpSN("desc", selectNametest('type', c0, [])) || cmpSN("file", selectNametest('type', c0, [])) || cmpSN("overview", selectNametest('type', c0, [])) || cmpSN("fileoverview", selectNametest('type', c0, [])) || cmpSN("summary", selectNametest('type', c0, []));
     }
 
     var j5 = [ 0, 'tags', 2, p1 ];
@@ -107,7 +107,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t1.j = j0;
     M.t1.a = 0;
 
-    // match .tags[ .type == "classdesc" || .type == "description" || .type == "desc" || .type == "file" || .type == "overview" || .type == "fileoverview" ] : item-tag
+    // match .tags[ .type == "classdesc" || .type == "description" || .type == "desc" || .type == "file" || .type == "overview" || .type == "fileoverview" || .type == "summary" ] : item-tag
     M.t2 = function t2(m, c0, i0, l0, a0) {
         var r0 = '';
 

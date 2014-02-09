@@ -26,7 +26,15 @@ match .* mdox-tag-types-str {
 }
 
 
-match .tags[.type == 'classdesc' || .type == 'description' || .type == 'desc' || .type == 'file' || .type == 'overview' || .type == 'fileoverview'] item-tag {
+match .tags[
+    .type == 'classdesc' ||
+    .type == 'description' ||
+    .type == 'desc' ||
+    .type == 'file' ||
+    .type == 'overview' ||
+    .type == 'fileoverview' ||
+    .type == 'summary'
+] item-tag {
     .description
 }
 

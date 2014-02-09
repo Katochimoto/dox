@@ -46,6 +46,7 @@ function SampleClass() {
  * // return { "zxc": 456 }
  * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
  *
+ * @summary summary descr
  * @method
  * @memberof Qwe
  * @static
