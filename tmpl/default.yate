@@ -426,6 +426,9 @@ match .comments[
         } else if (.tags[.type == 'mixin'].name) {
             .tags[.type == 'mixin'].name
 
+        } else if (.tags[.type == 'name'].name) {
+            .tags[.type == 'name'].name
+
         } else if (.ctx[.type == 'function'].name) {
             .ctx[.type == 'function'].name
 
@@ -506,7 +509,6 @@ match .comments[
     // augments
     // extends
     // mixes
-    // name
 }
 
 
