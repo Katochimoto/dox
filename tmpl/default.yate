@@ -81,6 +81,186 @@ match .comments[
 
 
 /**
+ * Property description
+ */
+match .comments[
+    .tags.type == 'constant' ||
+    .tags.type == 'const' ||
+    .tags.type == 'var' ||
+    .tags.type == 'member' ||
+    .ctx.type == 'property' ||
+    .ctx.type == 'declaration'
+] item-comment {
+
+    is-deprecated = boolean(.tags[.type == 'deprecated'])
+
+    context = (
+        if (.tags[.type == 'memberof'].parent) {
+            .tags[.type == 'memberof'].parent
+
+        } else if (.tags[.type == 'memberOf'].parent) {
+            .tags[.type == 'memberOf'].parent
+
+        } else if (.ctx[.type == 'property'].cons) {
+            .ctx[.type == 'property'].cons
+
+        } else if (.ctx[.type == 'declaration'].receiver) {
+            .ctx[.type == 'declaration'].receiver
+
+        } else {
+            ""
+        }
+    )
+
+    context-sep = (
+        if (!mdox-string-empty(context)) {
+            " *"
+            context
+            if (.tags[.type == 'static']) {
+                ":"
+            } else {
+                "."
+            }
+            "*"
+        } else {
+            ""
+        }
+    )
+
+    name = (
+        " **"
+        if (is-deprecated) {
+            "~~"
+        }
+
+        if (.tags[.type == 'constant'].name) {
+            .tags[.type == 'constant'].name
+
+        } else if (.tags[.type == 'const'].name) {
+            .tags[.type == 'const'].name
+
+        } else if (.tags[.type == 'member'].name) {
+            .tags[.type == 'member'].name
+
+        } else if (.tags[.type == 'var'].name) {
+            .tags[.type == 'var'].name
+
+        } else if (.tags[.type == 'name'].name) {
+            .tags[.type == 'name'].name
+
+        } else if (.ctx[.type == 'property'].name) {
+            .ctx[.type == 'property'].name
+
+        } else if (.ctx[.type == 'declaration'].name) {
+            .ctx[.type == 'declaration'].name
+
+        }
+
+        if (is-deprecated) {
+        "~~"
+        }
+        "**"
+    )
+
+    types = (
+        apply . mdox-tag-types ([
+            'type'
+            'constant'
+            'const'
+            'member'
+            'var'
+        ])
+    )
+
+    description = (
+        apply .tags[.type == 'summary'] item-tag
+        if (.tags[.type == 'desc']) {
+            "\n\n"
+            apply .tags[.type == 'desc'] item-tag
+        }
+        if (.tags[.type == 'description']) {
+            "\n\n"
+            apply .tags[.type == 'description'] item-tag
+        }
+        if (.description.full) {
+            "\n\n"
+            .description.full
+        }
+    )
+
+    access = (
+        if (.tags[.type == 'access'].access) {
+            .tags[.type == 'access'].access
+
+        } else if (.tags[.type == 'private']) {
+            "private"
+
+        } else if (.tags[.type == 'protected']) {
+            "protected"
+
+        } else if (.tags[.type == 'public']) {
+            "public"
+        }
+    )
+
+    alias = (
+        if (.tags[.type == 'alias'].name) {
+            .tags[.type == 'alias'].name
+        }
+    )
+
+    value = (
+        if (.ctx[.type == 'property'].value) {
+            .ctx[.type == 'property'].value
+
+        } else if (.ctx[.type == 'declaration'].value) {
+            .ctx[.type == 'declaration'].value
+
+        } else {
+            ""
+        }
+    )
+
+    "####"
+    context-sep
+    name
+    " "
+    types
+
+    if (!mdox-string-empty(value)) {
+        " = "
+        "``"
+        value
+        "``"
+    }
+
+    "\n\n"
+
+    mdox-string-trim(description)
+
+
+    if (!mdox-string-empty(access)) {
+        "\n\n"
+        html(">")
+        " *Access:* "
+        "`"
+        access
+        "`"
+    }
+
+    if (!mdox-string-empty(alias)) {
+        "\n\n"
+        html(">")
+        " *Alias:* "
+        "`"
+        alias
+        "`"
+    }
+
+    "\n\n"
+}
+
+/**
  * Function description
  */
 match .comments[
@@ -470,6 +650,15 @@ match .comments[
         } else if (.ctx[.type == 'function'].name) {
             .ctx[.type == 'function'].name
 
+        } else if (.ctx[.type == 'declaration'].name) {
+            .ctx[.type == 'declaration'].name
+
+        } else if (.ctx[.type == 'property'].name) {
+            .ctx[.type == 'property'].name
+
+        } else if (.ctx[.type == 'method'].name) {
+            .ctx[.type == 'method'].name
+
         } else {
             "Undefined"
         }
@@ -522,6 +711,48 @@ match .comments[
     )
 
 
+    prop-description = (
+        for (.tags[.type == 'property']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+
+            html(">")
+            " - "
+
+            if (.optional) {
+                "["
+            }
+
+            .name
+
+            " "
+            apply . mdox-tag-types-str
+
+            if (.nonNullable) {
+                " `non nullable`"
+            } else if (.nullable) {
+                " `nullable`"
+            }
+
+            if (.optional) {
+                "]"
+            }
+
+            if (.default) {
+                " = ``"
+                .default
+                "``"
+            }
+
+            if (.description) {
+                " : "
+                .description
+            }
+        }
+    )
+
+
 
     "###"
     name
@@ -534,6 +765,14 @@ match .comments[
     "\n\n"
 
     mdox-string-trim(description)
+
+    if (!mdox-string-empty(prop-description)) {
+        "\n\n"
+        html(">")
+        " *Property:*"
+        "\n\n"
+        prop-description
+    }
 
     if (!mdox-string-empty(example)) {
         "\n\n"
@@ -626,9 +865,9 @@ match .comments[
 
         // event
         // instance
-        // property
+        //
         // enum
-        // member
+        //
         // readonly
         // typedef
         // http://usejsdoc.org/tags-kind.html
