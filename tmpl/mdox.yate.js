@@ -136,7 +136,7 @@ var yr = yr || require('yate/lib/runtime.js');
         var r0 = '';
 
         r0 += closeAttrs(a0);
-        r0 += " ";
+        r0 += "*Version*: ";
         r0 += "`";
         r0 += nodeset2xml( selectNametest('description', c0, []) );
         r0 += "`";

@@ -43,7 +43,7 @@ match .tags[.type == 'module'] item-tag {
 }
 
 match .tags[.type == 'version'] item-tag {
-    " "
+    "*Version*: "
     "`"
     .description
     "`"

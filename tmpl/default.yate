@@ -63,6 +63,7 @@ match .comments[
     "#"
     name
 
+    "\n\n"
     apply .tags[.type == 'version'] item-tag
 
     "\n\n"
@@ -93,6 +94,8 @@ match .comments[
 ] item-comment {
 
     is-deprecated = boolean(.tags[.type == 'deprecated'])
+
+    is-readonly = boolean(.tags[.type == 'readonly'])
 
     context = (
         if (.tags[.type == 'memberof'].parent) {
@@ -127,12 +130,31 @@ match .comments[
         }
     )
 
-    name = (
-        " **"
-        if (is-deprecated) {
-            "~~"
-        }
+    name-type = (
+        if (.tags[.type == 'constant'].name) {
+            "Constant"
 
+        } else if (.tags[.type == 'const'].name) {
+            "Constant"
+
+        } else if (.tags[.type == 'member'].name) {
+            "Var"
+
+        } else if (.tags[.type == 'var'].name) {
+            "Var"
+
+        } else if (.ctx[.type == 'property'].name) {
+            "Property"
+
+        } else if (.ctx[.type == 'declaration'].name) {
+            "Var"
+
+        } else {
+            ""
+        }
+    )
+
+    name-context = (
         if (.tags[.type == 'constant'].name) {
             .tags[.type == 'constant'].name
 
@@ -155,6 +177,15 @@ match .comments[
             .ctx[.type == 'declaration'].name
 
         }
+    )
+
+    name = (
+        " **"
+        if (is-deprecated) {
+            "~~"
+        }
+
+        name-context
 
         if (is-deprecated) {
         "~~"
@@ -221,7 +252,17 @@ match .comments[
         }
     )
 
-    "####"
+    "#### "
+    if (!mdox-string-empty(name-type)) {
+        name-type
+        ": "
+    }
+    name-context
+
+    "\n\n"
+    "***"
+    "\n\n"
+
     context-sep
     name
     " "
@@ -308,12 +349,34 @@ match .comments[
         }
     )
 
-    name = (
-        " **"
-        if (is-deprecated) {
-            "~~"
-        }
+    name-type = (
+        if (.tags[.type == 'constructs']) {
+            "Constructor"
 
+        } else if (.tags[.type == 'callback']) {
+            "Callback"
+
+        } else if (.tags[.type == 'func']) {
+            "Function"
+
+        } else if (.tags[.type == 'function'].name) {
+            "Function"
+
+        } else if (.tags[.type == 'method'].name) {
+            "Method"
+
+        } else if (.ctx[.type == 'method'].name) {
+            "Method"
+
+        } else if (.ctx[.type == 'function'].name) {
+            "Function"
+
+        } else {
+            ""
+        }
+    )
+
+    name = (
         if (.tags[.type == 'constructs'].name) {
             .tags[.type == 'constructs'].name
 
@@ -339,6 +402,15 @@ match .comments[
             .ctx[.type == 'function'].name
 
         }
+    )
+
+    name-context = (
+        " **"
+        if (is-deprecated) {
+            "~~"
+        }
+
+        name
 
         if (is-deprecated) {
             "~~"
@@ -523,9 +595,18 @@ match .comments[
 
 
 
-    "####"
-    context-sep
+    "#### "
+    if (!mdox-string-empty(name-type)) {
+        name-type
+        ": "
+    }
+
     name
+
+    "\n\n"
+
+    context-sep
+    name-context
 
     " ("
 
@@ -536,6 +617,8 @@ match .comments[
     " "
     types
 
+    "\n\n"
+    "***"
     "\n\n"
 
     mdox-string-trim(description)
