@@ -41,7 +41,10 @@ match .comments[
 
     name = (
         " "
-        if (.tags[.type == 'file'].description) {
+        if (.tags[.type == 'title'].description) {
+            .tags[.type == 'title'].description
+
+        } else if (.tags[.type == 'file'].description) {
             .tags[.type == 'file'].description
 
         } else if (.tags[.type == 'overview'].description) {
@@ -222,11 +225,16 @@ match .comments[
     )
 
     "#### "
-    if (!mdox-string-empty(name-type)) {
-        name-type
-        ": "
+    if (.tags[.type == 'title'].description) {
+        .tags[.type == 'title'].description
+
+    } else {
+        if (!mdox-string-empty(name-type)) {
+            name-type
+            ": "
+        }
+        name
     }
-    name
 
     "\n\n"
 
@@ -437,12 +445,17 @@ match .comments[
 
 
     "#### "
-    if (!mdox-string-empty(name-type)) {
-        name-type
-        ": "
-    }
+    if (.tags[.type == 'title'].description) {
+        .tags[.type == 'title'].description
 
-    name
+    } else {
+        if (!mdox-string-empty(name-type)) {
+            name-type
+            ": "
+        }
+
+        name
+    }
 
     "\n\n"
 
@@ -636,12 +649,17 @@ match .comments[
 
 
     "### "
-    if (!mdox-string-empty(name-type)) {
-        name-type
-        ": "
-    }
+    if (.tags[.type == 'title'].description) {
+        .tags[.type == 'title'].description
 
-    name
+    } else {
+        if (!mdox-string-empty(name-type)) {
+            name-type
+            ": "
+        }
+
+        name
+    }
 
     "\n\n"
     "***"
@@ -743,12 +761,17 @@ match .comments[
 
 
     "## "
-    if (!mdox-string-empty(name-type)) {
-        name-type
-        ": "
-    }
+    if (.tags[.type == 'title'].description) {
+        .tags[.type == 'title'].description
 
-    name
+    } else {
+        if (!mdox-string-empty(name-type)) {
+            name-type
+            ": "
+        }
+
+        name
+    }
 
     "\n\n"
 
