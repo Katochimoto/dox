@@ -143,6 +143,9 @@ match .comments[
         } else if (.tags[.type == 'var'].name) {
             "Var"
 
+        } else if (.tags[.type == 'enum'].name) {
+            "Enum"
+
         } else if (.ctx[.type == 'property'].name) {
             "Property"
 
@@ -190,6 +193,7 @@ match .comments[
             'const'
             'member'
             'var'
+            'enum'
         ])
     )
 
@@ -669,7 +673,8 @@ match .comments[
     .tags.type == 'namespace' ||
     .tags.type == 'mixin' ||
     .tags.type == 'lends' ||
-    .tags.type == 'event'
+    .tags.type == 'event' ||
+    .tags.type == 'typedef'
 ] item-comment {
 
     name-type = (
@@ -687,6 +692,9 @@ match .comments[
 
         } else if (.tags[.type == 'event'].name) {
             "Event"
+
+        } else if (.tags[.type == 'typedef'].name) {
+            "Type"
 
         } else {
             ""
@@ -708,6 +716,9 @@ match .comments[
 
         } else if (.tags[.type == 'event'].name) {
             .tags[.type == 'event'].name
+
+        } else if (.tags[.type == 'typedef'].name) {
+            .tags[.type == 'typedef'].name
 
         } else if (.tags[.type == 'name'].name) {
             .tags[.type == 'name'].name
@@ -735,6 +746,7 @@ match .comments[
             'class'
             'constructor'
             'namespace'
+            'typedef'
         ])
     )
 
@@ -951,11 +963,4 @@ match .comments[
 
     "\n\n"
 }
-
-
-        // enum
-        //
-        // readonly
-        // typedef
-        // http://usejsdoc.org/tags-kind.html
 
