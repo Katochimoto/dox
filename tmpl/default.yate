@@ -665,10 +665,32 @@ match .comments[
     .tags.type == 'constructor' ||
     .tags.type == 'namespace' ||
     .tags.type == 'mixin' ||
-    .tags.type == 'lends'
+    .tags.type == 'lends' ||
+    .tags.type == 'event'
 ] item-comment {
 
     is-deprecated = boolean(.tags[.type == 'deprecated'])
+
+    name-type = (
+        if (.tags[.type == 'class']) {
+            "Class"
+
+        } else if (.tags[.type == 'constructor']) {
+            "Class"
+
+        } else if (.tags[.type == 'namespace']) {
+            "Namespace"
+
+        } else if (.tags[.type == 'mixin'].name) {
+            "Mixin"
+
+        } else if (.tags[.type == 'event'].name) {
+            "Event"
+
+        } else {
+            ""
+        }
+    )
 
     name = (
         if (.tags[.type == 'class'].name) {
@@ -682,6 +704,9 @@ match .comments[
 
         } else if (.tags[.type == 'mixin'].name) {
             .tags[.type == 'mixin'].name
+
+        } else if (.tags[.type == 'event'].name) {
+            .tags[.type == 'event'].name
 
         } else if (.tags[.type == 'name'].name) {
             .tags[.type == 'name'].name
@@ -788,7 +813,12 @@ match .comments[
 
 
 
-    "###"
+    "### "
+    if (!mdox-string-empty(name-type)) {
+        name-type
+        ": "
+    }
+
     name
 
     "\n\n"
@@ -846,8 +876,16 @@ match .comments[
         ])
     )
 
+    name-type = (
+        if (.tags[.type == 'module']) {
+            "Module"
+
+        } else {
+            ""
+        }
+    )
+
     name = (
-        " "
         .tags[.type == 'module'].name
     )
 
@@ -874,7 +912,12 @@ match .comments[
 
 
 
-    "##"
+    "## "
+    if (!mdox-string-empty(name-type)) {
+        name-type
+        ": "
+    }
+
     name
 
     "\n\n"
@@ -903,7 +946,7 @@ match .comments[
 }
 
 
-        // event
+        //
         // instance
         //
         // enum
