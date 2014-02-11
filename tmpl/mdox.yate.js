@@ -203,7 +203,7 @@ var yr = yr || require('yate/lib/runtime.js');
             }
             r1 += simpleScalar('title', c1);
             r1 += "\n";
-            r1 += "```\n";
+            r1 += "```js\n";
             r1 += simpleScalar('description', c1);
             r1 += "\n```";
         }
