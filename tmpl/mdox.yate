@@ -35,6 +35,137 @@ match .* tags-flags-str {
 }
 
 
+match .* description {
+    tags-type = [
+        'summary'
+        'classdesc'
+        'desc'
+        'description'
+    ]
+
+    description = (
+        for (.tags) {
+            if (mdox-array-inarray(.type, tags-type) && .description) {
+                .description
+                "\n\n"
+            }
+        }
+
+        if (.description.full) {
+            .description.full
+            "\n\n"
+        }
+    )
+
+    mdox-string-trim(description)
+}
+
+
+match .* example {
+    example = (
+        for (.tags[.type == 'example']) {
+            if (index() != 0) {
+                "\n\n"
+            }
+            .title
+            "\n"
+            "```\n"
+            .description
+            "\n```"
+        }
+    )
+
+    if (!mdox-string-empty(example)) {
+        "\n\n"
+        "##### **Example**"
+        "\n\n"
+        example
+    }
+}
+
+
+match .* access {
+    access = (
+        if (.tags[.type == 'access'].access) {
+            .tags[.type == 'access'].access
+
+        } else if (.tags[.type == 'private']) {
+            "private"
+
+        } else if (.tags[.type == 'protected']) {
+            "protected"
+
+        } else if (.tags[.type == 'public']) {
+            "public"
+        }
+    )
+
+    if (!mdox-string-empty(access)) {
+        "`{access}` "
+    }
+}
+
+
+match .* argument-description (array tags-type) {
+    for (.tags[mdox-array-inarray(.type, tags-type)]) {
+        if (index() != 0) {
+            "\n"
+        }
+
+        " - "
+
+        if (.optional) {
+            "["
+        }
+
+        .name
+
+        " "
+        apply . mdox-tag-types-str
+
+        if (.nonNullable) {
+            " `non nullable`"
+        } else if (.nullable) {
+            " `nullable`"
+        }
+
+        if (.optional) {
+            "]"
+        }
+
+        if (.default) {
+            " = ``"
+            .default
+            "``"
+        }
+
+        if (.description) {
+            " : "
+            .description
+        }
+    }
+}
+
+
+match .* type-description (array tags-type) {
+    for (.tags[mdox-array-inarray(.type, tags-type)]) {
+        if (index() != 0) {
+            "\n"
+        }
+
+        " - "
+
+        apply . mdox-tag-types-str
+
+        if (.description) {
+            " : "
+            .description
+        }
+    }
+}
+
+
+
 
 match .tags[
     .type == 'classdesc' ||

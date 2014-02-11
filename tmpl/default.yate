@@ -6,7 +6,7 @@ match / {
     apply .comments[
         !(.ignore) &&
         .tags.type != 'ignore' &&
-        (.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview')
+        (.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview' || .tags.kind == 'file')
     ] item-comment
 
     apply .comments[
@@ -21,7 +21,8 @@ match / {
         .tags.type != 'global' &&
         .tags.type != 'file' &&
         .tags.type != 'overview' &&
-        .tags.type != 'fileoverview'
+        .tags.type != 'fileoverview' &&
+        .tags.kind != 'file'
     ] item-comment
 
     "\n\n[TOC]\n\n"
@@ -33,7 +34,9 @@ match / {
 match .comments[
     .tags.type == 'file' ||
     .tags.type == 'overview' ||
-    .tags.type == 'fileoverview'
+    .tags.type == 'fileoverview' ||
+
+    .tags.kind == 'file'
 ] item-comment {
 
     name = (
@@ -52,18 +55,12 @@ match .comments[
         }
     )
 
-    description = (
-        apply .tags[.type == 'desc'] item-tag
-        "\n\n"
-        apply .tags[.type == 'description'] item-tag
-        "\n\n"
-        .description.full
-    )
-
     "#"
     name
 
     "\n\n"
+
+    apply . access
 
     if (.tags[.type == 'version'].description) {
         "`Version: {.tags[.type == 'version'].description}` "
@@ -79,7 +76,9 @@ match .comments[
 
     "\n\n"
 
-    mdox-string-trim(description)
+    apply . description
+
+    apply . example
 
     "\n\n"
 }
@@ -94,7 +93,10 @@ match .comments[
     .tags.type == 'var' ||
     .tags.type == 'member' ||
     .ctx.type == 'property' ||
-    .ctx.type == 'declaration'
+    .ctx.type == 'declaration' ||
+
+    .tags.kind == 'constant' ||
+    .tags.kind == 'member'
 ] item-comment {
 
     context = (
@@ -131,25 +133,25 @@ match .comments[
     )
 
     name-type = (
-        if (.tags[.type == 'constant'].name) {
+        if (.tags[.type == 'constant' || .kind == 'constant']) {
             "Constant"
 
-        } else if (.tags[.type == 'const'].name) {
+        } else if (.tags[.type == 'const']) {
             "Constant"
 
-        } else if (.tags[.type == 'member'].name) {
+        } else if (.tags[.type == 'member' || .kind == 'member']) {
             "Var"
 
-        } else if (.tags[.type == 'var'].name) {
+        } else if (.tags[.type == 'var']) {
             "Var"
 
-        } else if (.tags[.type == 'enum'].name) {
+        } else if (.tags[.type == 'enum']) {
             "Enum"
 
-        } else if (.ctx[.type == 'property'].name) {
+        } else if (.ctx[.type == 'property']) {
             "Property"
 
-        } else if (.ctx[.type == 'declaration'].name) {
+        } else if (.ctx[.type == 'declaration']) {
             "Var"
 
         } else {
@@ -179,6 +181,8 @@ match .comments[
         } else if (.ctx[.type == 'declaration'].name) {
             .ctx[.type == 'declaration'].name
 
+        } else {
+            'Undefined'
         }
     )
 
@@ -197,42 +201,7 @@ match .comments[
         ])
     )
 
-    description = (
-        apply .tags[.type == 'summary'] item-tag
-        if (.tags[.type == 'desc']) {
-            "\n\n"
-            apply .tags[.type == 'desc'] item-tag
-        }
-        if (.tags[.type == 'description']) {
-            "\n\n"
-            apply .tags[.type == 'description'] item-tag
-        }
-        if (.description.full) {
-            "\n\n"
-            .description.full
-        }
-    )
 
-    access = (
-        if (.tags[.type == 'access'].access) {
-            .tags[.type == 'access'].access
-
-        } else if (.tags[.type == 'private']) {
-            "private"
-
-        } else if (.tags[.type == 'protected']) {
-            "protected"
-
-        } else if (.tags[.type == 'public']) {
-            "public"
-        }
-    )
-
-    alias = (
-        if (.tags[.type == 'alias'].name) {
-            .tags[.type == 'alias'].name
-        }
-    )
 
     value = (
         if (.ctx[.type == 'property'].value) {
@@ -271,6 +240,8 @@ match .comments[
     "***"
     "\n\n"
 
+    apply . access
+
     apply . tags-flags([
         'deprecated'
         'instance'
@@ -280,17 +251,15 @@ match .comments[
         'inner'
     ])
 
-    if (!mdox-string-empty(access)) {
-        "`Access: {access}` "
-    }
-
-    if (!mdox-string-empty(alias)) {
-        "`Alias: {alias}` "
+    if (!mdox-string-empty(.tags[.type == 'alias'].name)) {
+        "`Alias: {.tags[.type == 'alias'].name}` "
     }
 
     "\n\n"
 
-    mdox-string-trim(description)
+    apply . description
+
+    apply . example
 
     "\n\n"
 }
@@ -407,22 +376,6 @@ match .comments[
         ])
     )
 
-    description = (
-        apply .tags[.type == 'summary'] item-tag
-        if (.tags[.type == 'desc']) {
-            "\n\n"
-            apply .tags[.type == 'desc'] item-tag
-        }
-        if (.tags[.type == 'description']) {
-            "\n\n"
-            apply .tags[.type == 'description'] item-tag
-        }
-        if (.description.full) {
-            "\n\n"
-            .description.full
-        }
-    )
-
     args = (
         for (.tags[(.type == 'param' || .type == 'arg' || .type == 'argument') && .original == .name]) {
             if (index() != 0) {
@@ -443,77 +396,17 @@ match .comments[
     )
 
     throws-description = (
-        for (.tags[.type == 'throws' || .type == 'exception']) {
-            if (index() != 0) {
-                "\n"
-            }
-
-            " - "
-
-            apply . mdox-tag-types-str
-
-            if (.description) {
-                " : "
-                .description
-            }
-        }
-    )
-
-    args-description = (
-        for (.tags[.type == 'param' || .type == 'arg' || .type == 'argument']) {
-            if (index() != 0) {
-                "\n"
-            }
-
-            " - "
-
-            if (.optional) {
-                "["
-            }
-
-            .name
-
-            " "
-            apply . mdox-tag-types-str
-
-            if (.nonNullable) {
-                " `non nullable`"
-            } else if (.nullable) {
-                " `nullable`"
-            }
-
-            if (.optional) {
-                "]"
-            }
-
-            if (.default) {
-                " = ``"
-                .default
-                "``"
-            }
-
-            if (.description) {
-                " : "
-                .description
-            }
-        }
+        apply . type-description ([
+            'throws'
+            'exception'
+        ])
     )
 
     return-description = (
-        for (.tags[.type == 'return' || .type == 'returns']) {
-            if (index() != 0) {
-                "\n"
-            }
-
-            " - "
-
-            apply . mdox-tag-types-str
-
-            if (.description) {
-                " : "
-                .description
-            }
-        }
+        apply . type-description ([
+            'return'
+            'returns'
+        ])
     )
 
     fires-description = (
@@ -528,49 +421,13 @@ match .comments[
         }
     )
 
-
-
-    example = (
-        for (.tags[.type == 'example']) {
-            if (index() != 0) {
-                "\n\n"
-            }
-            .title
-            "\n"
-            "```\n"
-            .description
-            "\n```"
-        }
+    args-description = (
+        apply . argument-description ([
+            'param'
+            'arg'
+            'argument'
+        ])
     )
-
-
-    access = (
-        if (.tags[.type == 'access'].access) {
-            .tags[.type == 'access'].access
-
-        } else if (.tags[.type == 'private']) {
-            "private"
-
-        } else if (.tags[.type == 'protected']) {
-            "protected"
-
-        } else if (.tags[.type == 'public']) {
-            "public"
-        }
-    )
-
-    alias = (
-        if (.tags[.type == 'alias'].name) {
-            .tags[.type == 'alias'].name
-        }
-    )
-
-    this-type = (
-        if (.tags[.type == 'this'].name) {
-            .tags[.type == 'this'].name
-        }
-    )
-
 
 
     "#### "
@@ -599,6 +456,8 @@ match .comments[
     "***"
     "\n\n"
 
+    apply . access
+
     apply . tags-flags([
         'deprecated'
         'instance'
@@ -607,21 +466,17 @@ match .comments[
         'inner'
     ])
 
-    if (!mdox-string-empty(access)) {
-        "`Access: {access}` "
+    if (!mdox-string-empty(.tags[.type == 'alias'].name)) {
+        "`Alias: {.tags[.type == 'alias'].name}` "
     }
 
-    if (!mdox-string-empty(alias)) {
-        "`Alias: {alias}` "
-    }
-
-    if (!mdox-string-empty(this-type)) {
-        "`This: {this-type}` "
+    if (!mdox-string-empty(.tags[.type == 'this'].name)) {
+        "`This: {.tags[.type == 'this'].name}` "
     }
 
     "\n\n"
 
-    mdox-string-trim(description)
+    apply . description
 
     if (!mdox-string-empty(args-description)) {
         "\n\n"
@@ -652,12 +507,7 @@ match .comments[
     }
 
 
-    if (!mdox-string-empty(example)) {
-        "\n\n"
-        "##### **Example**"
-        "\n\n"
-        example
-    }
+    apply . example
 
     "\n\n"
 }
@@ -674,27 +524,38 @@ match .comments[
     .tags.type == 'mixin' ||
     .tags.type == 'lends' ||
     .tags.type == 'event' ||
-    .tags.type == 'typedef'
+    .tags.type == 'typedef' ||
+    .tags.type == 'external' ||
+
+    .tags.kind == 'namespace' ||
+    .tags.kind == 'typedef' ||
+    .tags.kind == 'mixin' ||
+    .tags.kind == 'class' ||
+    .tags.kind == 'event' ||
+    .tags.kind == 'external'
 ] item-comment {
 
     name-type = (
-        if (.tags[.type == 'class']) {
+        if (.tags[.type == 'class' || .kind == 'class']) {
             "Class"
 
         } else if (.tags[.type == 'constructor']) {
             "Class"
 
-        } else if (.tags[.type == 'namespace']) {
+        } else if (.tags[.type == 'namespace' || .kind == 'namespace']) {
             "Namespace"
 
-        } else if (.tags[.type == 'mixin'].name) {
+        } else if (.tags[.type == 'mixin' || .kind == 'mixin']) {
             "Mixin"
 
-        } else if (.tags[.type == 'event'].name) {
+        } else if (.tags[.type == 'event' || .kind == 'event']) {
             "Event"
 
-        } else if (.tags[.type == 'typedef'].name) {
+        } else if (.tags[.type == 'typedef' || .kind == 'typedef']) {
             "Type"
+
+        } else if (.tags[.type == 'external' || .kind == 'external']) {
+            "External"
 
         } else {
             ""
@@ -719,6 +580,9 @@ match .comments[
 
         } else if (.tags[.type == 'typedef'].name) {
             .tags[.type == 'typedef'].name
+
+        } else if (.tags[.type == 'external'].name) {
+            .tags[.type == 'external'].name
 
         } else if (.tags[.type == 'name'].name) {
             .tags[.type == 'name'].name
@@ -750,78 +614,17 @@ match .comments[
         ])
     )
 
-    description = (
-        apply .tags[.type == 'summary'] item-tag
-        if (.tags[.type == 'classdesc']) {
-            "\n\n"
-            apply .tags[.type == 'classdesc'] item-tag
-        }
-        if (.tags[.type == 'desc']) {
-            "\n\n"
-            apply .tags[.type == 'desc'] item-tag
-        }
-        if (.tags[.type == 'description']) {
-            "\n\n"
-            apply .tags[.type == 'description'] item-tag
-        }
-        if (.description.full) {
-            "\n\n"
-            .description.full
-        }
-    )
-
-    example = (
-        for (.tags[.type == 'example']) {
-            if (index() != 0) {
-                "\n\n"
-            }
-            .title
-            "\n"
-            "```\n"
-            .description
-            "\n```"
-        }
-    )
-
-
     prop-description = (
-        for (.tags[.type == 'property']) {
-            if (index() != 0) {
-                "\n"
-            }
+        apply . argument-description ([
+            'property'
+        ])
+    )
 
-            " - "
-
-            if (.optional) {
-                "["
-            }
-
-            .name
-
-            " "
-            apply . mdox-tag-types-str
-
-            if (.nonNullable) {
-                " `non nullable`"
-            } else if (.nullable) {
-                " `nullable`"
-            }
-
-            if (.optional) {
-                "]"
-            }
-
-            if (.default) {
-                " = ``"
-                .default
-                "``"
-            }
-
-            if (.description) {
-                " : "
-                .description
-            }
-        }
+    throws-description = (
+        apply . type-description ([
+            'throws'
+            'exception'
+        ])
     )
 
 
@@ -838,6 +641,8 @@ match .comments[
     "***"
     "\n\n"
 
+    apply . access
+
     apply . tags-flags([
         'deprecated'
         'instance'
@@ -854,7 +659,7 @@ match .comments[
 
     "\n\n"
 
-    mdox-string-trim(description)
+    apply . description
 
     if (!mdox-string-empty(prop-description)) {
         "\n\n"
@@ -863,12 +668,14 @@ match .comments[
         prop-description
     }
 
-    if (!mdox-string-empty(example)) {
+    if (!mdox-string-empty(throws-description)) {
         "\n\n"
-        "##### **Example**"
-        "\n\n"
-        example
+        "*Exceptions:*"
+        "\n"
+        throws-description
     }
+
+    apply . example
 
     "\n\n"
 
@@ -882,7 +689,8 @@ match .comments[
  * Module description
  */
 match .comments[
-    .tags.type == 'module'
+    .tags.type == 'module' ||
+    .tags.kind == 'module'
 ] item-comment {
 
     types = (
@@ -892,37 +700,38 @@ match .comments[
     )
 
     name-type = (
-        if (.tags[.type == 'module']) {
-            "Module"
-
-        } else {
-            ""
-        }
+        "Module"
     )
 
     name = (
-        .tags[.type == 'module'].name
-    )
+        if (.tags[.type == 'module'].name) {
+            .tags[.type == 'module'].name
 
-    description = (
-        apply .tags[.type == 'desc'] item-tag
-        "\n\n"
-        apply .tags[.type == 'description'] item-tag
-        "\n\n"
-        .description.full
-    )
+        } else if (.tags[.type == 'name'].name) {
+            .tags[.type == 'name'].name
 
-    example = (
-        for (.tags[.type == 'example']) {
-            if (index() != 0) {
-                "\n\n"
-            }
-            .title
-            "\n"
-            "```\n"
-            .description
-            "\n```"
+        } else if (.ctx[.type == 'function'].name) {
+            .ctx[.type == 'function'].name
+
+        } else if (.ctx[.type == 'declaration'].name) {
+            .ctx[.type == 'declaration'].name
+
+        } else if (.ctx[.type == 'property'].name) {
+            .ctx[.type == 'property'].name
+
+        } else if (.ctx[.type == 'method'].name) {
+            .ctx[.type == 'method'].name
+
+        } else {
+            "Undefined"
         }
+    )
+
+    throws-description = (
+        apply . type-description ([
+            'throws'
+            'exception'
+        ])
     )
 
 
@@ -937,6 +746,8 @@ match .comments[
 
     "\n\n"
 
+    apply . access
+
     apply . tags-flags([
         'deprecated'
         'instance'
@@ -952,14 +763,16 @@ match .comments[
 
     "\n\n"
 
-    mdox-string-trim(description)
+    apply . description
 
-    if (!mdox-string-empty(example)) {
+    if (!mdox-string-empty(throws-description)) {
         "\n\n"
-        "##### **Example**"
-        "\n\n"
-        example
+        "*Exceptions:*"
+        "\n"
+        throws-description
     }
+
+    apply . example
 
     "\n\n"
 }
