@@ -75,36 +75,6 @@ var yr = yr || require('yate/lib/runtime.js');
 
     var j20 = [ 0, 'default' ];
 
-    function p9(m, c0, i0, l0) {
-        return cmpSN("classdesc", selectNametest('type', c0, [])) || cmpSN("description", selectNametest('type', c0, [])) || cmpSN("desc", selectNametest('type', c0, [])) || cmpSN("file", selectNametest('type', c0, [])) || cmpSN("overview", selectNametest('type', c0, [])) || cmpSN("fileoverview", selectNametest('type', c0, [])) || cmpSN("summary", selectNametest('type', c0, []));
-    }
-
-    var j22 = [ 0, 'tags', 2, p9 ];
-
-    function p10(m, c0, i0, l0) {
-        return cmpSN("module", selectNametest('type', c0, []));
-    }
-
-    var j23 = [ 0, 'tags', 2, p10 ];
-
-    function p11(m, c0, i0, l0) {
-        return cmpSN("version", selectNametest('type', c0, []));
-    }
-
-    var j24 = [ 0, 'tags', 2, p11 ];
-
-    function p12(m, c0, i0, l0) {
-        return cmpSN("copyright", selectNametest('type', c0, []));
-    }
-
-    var j25 = [ 0, 'tags', 2, p12 ];
-
-    function p13(m, c0, i0, l0) {
-        return cmpSN("author", selectNametest('type', c0, []));
-    }
-
-    var j26 = [ 0, 'tags', 2, p13 ];
-
     // match .* : mdox-tag-types
     M.t0 = function t0(m, c0, i0, l0, a0, v0) {
         var r0 = '';
@@ -358,71 +328,6 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t8.j = j0;
     M.t8.a = 0;
 
-    // match .tags[ .type == "classdesc" || .type == "description" || .type == "desc" || .type == "file" || .type == "overview" || .type == "fileoverview" || .type == "summary" ] : item-tag
-    M.t9 = function t9(m, c0, i0, l0, a0) {
-        var r0 = '';
-
-        r0 += closeAttrs(a0);
-        r0 += nodeset2xml( selectNametest('description', c0, []) );
-
-        return r0;
-    };
-    M.t9.j = j22;
-    M.t9.a = 0;
-
-    // match .tags[ .type == "module" ] : item-tag
-    M.t10 = function t10(m, c0, i0, l0, a0) {
-        var r0 = '';
-
-        r0 += closeAttrs(a0);
-        r0 += nodeset2xml( selectNametest('name', c0, []) );
-
-        return r0;
-    };
-    M.t10.j = j23;
-    M.t10.a = 0;
-
-    // match .tags[ .type == "version" ] : item-tag
-    M.t11 = function t11(m, c0, i0, l0, a0) {
-        var r0 = '';
-
-        r0 += closeAttrs(a0);
-        r0 += "*Version*: ";
-        r0 += "`";
-        r0 += nodeset2xml( selectNametest('description', c0, []) );
-        r0 += "`";
-
-        return r0;
-    };
-    M.t11.j = j24;
-    M.t11.a = 0;
-
-    // match .tags[ .type == "copyright" ] : item-tag
-    M.t12 = function t12(m, c0, i0, l0, a0) {
-        var r0 = '';
-
-        r0 += closeAttrs(a0);
-        r0 += "© ";
-        r0 += nodeset2xml( selectNametest('description', c0, []) );
-
-        return r0;
-    };
-    M.t12.j = j25;
-    M.t12.a = 0;
-
-    // match .tags[ .type == "author" ] : item-tag
-    M.t13 = function t13(m, c0, i0, l0, a0) {
-        var r0 = '';
-
-        r0 += closeAttrs(a0);
-        r0 += "*Author*: ";
-        r0 += nodeset2xml( selectNametest('description', c0, []) );
-
-        return r0;
-    };
-    M.t13.j = j26;
-    M.t13.a = 0;
-
     M.matcher = {
         "mdox-tag-types": {
             "*": [
@@ -467,15 +372,6 @@ var yr = yr || require('yate/lib/runtime.js');
         "type-description": {
             "*": [
                 "t8"
-            ]
-        },
-        "item-tag": {
-            "tags": [
-                "t13",
-                "t12",
-                "t11",
-                "t10",
-                "t9"
             ]
         }
     };

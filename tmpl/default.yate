@@ -62,6 +62,10 @@ match .comments[
 
     apply . access
 
+    apply . tags-flags([
+        'deprecated'
+    ])
+
     if (.tags[.type == 'version'].description) {
         "`Version: {.tags[.type == 'version'].description}` "
     }
@@ -71,10 +75,12 @@ match .comments[
     }
 
     "\n\n"
-    apply .tags[.type == 'copyright'] item-tag
 
-
-    "\n\n"
+    if (.tags[.type == 'copyright'].description) {
+        "&copy; "
+        .tags[.type == 'copyright'].description
+        "\n\n"
+    }
 
     apply . description
 

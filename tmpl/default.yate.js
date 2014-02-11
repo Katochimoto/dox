@@ -89,7 +89,7 @@ var yr = yr || require('yate/lib/runtime.js');
         return cmpSN("copyright", selectNametest('type', c0, []));
     }
 
-    var j15 = [ 0, 'tags', 2, p9 ];
+    var j15 = [ 0, 'tags', 2, p9, 0, 'description' ];
 
     var j16 = [ 0, 'ctx', 0, 'type' ];
 
@@ -414,6 +414,13 @@ var yr = yr || require('yate/lib/runtime.js');
         r0 += scalar2xml( v0 );
         r0 += "\n\n";
         r0 += m.a(m, m.s(j12, c0), 'access', a0)
+        r0 += m.a(m, m.s(j12, c0), 'tags-flags', a0, (function() {
+            var r0 = [];
+            var a0 = { a: {} };
+            r0.push("deprecated");
+
+            return r0;
+        })())
         if (nodeset2boolean( (m.s(j13, c0)) )) {
             r0 += "`Version: " + nodeset2xml( ( m.s(j13, c0) ) ) + "` ";
         }
@@ -421,8 +428,11 @@ var yr = yr || require('yate/lib/runtime.js');
             r0 += "`Author: " + nodeset2xml( ( m.s(j14, c0) ) ) + "` ";
         }
         r0 += "\n\n";
-        r0 += m.a(m, m.s(j15, c0), 'item-tag', a0)
-        r0 += "\n\n";
+        if (nodeset2boolean( (m.s(j15, c0)) )) {
+            r0 += "© ";
+            r0 += nodeset2xml( m.s(j15, c0) );
+            r0 += "\n\n";
+        }
         r0 += m.a(m, m.s(j12, c0), 'description', a0)
         r0 += m.a(m, m.s(j12, c0), 'example', a0)
         r0 += "\n\n";

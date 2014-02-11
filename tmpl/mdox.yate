@@ -163,39 +163,3 @@ match .* type-description (array tags-type) {
         }
     }
 }
-
-
-
-
-match .tags[
-    .type == 'classdesc' ||
-    .type == 'description' ||
-    .type == 'desc' ||
-    .type == 'file' ||
-    .type == 'overview' ||
-    .type == 'fileoverview' ||
-    .type == 'summary'
-] item-tag {
-    .description
-}
-
-match .tags[.type == 'module'] item-tag {
-    .name
-}
-
-match .tags[.type == 'version'] item-tag {
-    "*Version*: "
-    "`"
-    .description
-    "`"
-}
-
-match .tags[.type == 'copyright'] item-tag {
-    "&copy; "
-    .description
-}
-
-match .tags[.type == 'author'] item-tag {
-    "*Author*: "
-    .description
-}
