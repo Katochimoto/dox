@@ -62,19 +62,19 @@ Sample method description
 ##### **Example**
 
 Example usage of method1.
-```
+```js
 // return { "zxc": 456 }
 SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 ```
 
 Example usage of method2.
-```
+```js
 // return { "zxc": 456 }
 SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 ```
 
 
-```
+```js
 // return { "zxc": 456 }
 SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 ```
