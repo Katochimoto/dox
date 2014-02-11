@@ -97,10 +97,6 @@ match .comments[
     .ctx.type == 'declaration'
 ] item-comment {
 
-    is-deprecated = boolean(.tags[.type == 'deprecated'])
-
-    is-readonly = boolean(.tags[.type == 'readonly'])
-
     context = (
         if (.tags[.type == 'memberof'].parent) {
             .tags[.type == 'memberof'].parent
@@ -271,9 +267,14 @@ match .comments[
     "***"
     "\n\n"
 
-    if (is-deprecated) {
-        "`deprecated` "
-    }
+    apply . tags-flags([
+        'deprecated'
+        'instance'
+        'readonly'
+        'global'
+        'static'
+        'inner'
+    ])
 
     if (!mdox-string-empty(access)) {
         "`Access: {access}` "
@@ -302,8 +303,6 @@ match .comments[
     .ctx.type == 'method' ||
     .ctx.type == 'function'
 ] item-comment {
-
-    is-deprecated = boolean(.tags[.type == 'deprecated'])
 
     context = (
         if (.tags[.type == 'memberof'].parent) {
@@ -596,9 +595,13 @@ match .comments[
     "***"
     "\n\n"
 
-    if (is-deprecated) {
-        "`deprecated` "
-    }
+    apply . tags-flags([
+        'deprecated'
+        'instance'
+        'global'
+        'static'
+        'inner'
+    ])
 
     if (!mdox-string-empty(access)) {
         "`Access: {access}` "
@@ -668,8 +671,6 @@ match .comments[
     .tags.type == 'lends' ||
     .tags.type == 'event'
 ] item-comment {
-
-    is-deprecated = boolean(.tags[.type == 'deprecated'])
 
     name-type = (
         if (.tags[.type == 'class']) {
@@ -825,9 +826,13 @@ match .comments[
     "***"
     "\n\n"
 
-    if (is-deprecated) {
-        "`deprecated` "
-    }
+    apply . tags-flags([
+        'deprecated'
+        'instance'
+        'global'
+        'static'
+        'inner'
+    ])
 
     if (types) {
         "\n\n"
@@ -867,8 +872,6 @@ match .comments[
 match .comments[
     .tags.type == 'module'
 ] item-comment {
-
-    is-deprecated = boolean(.tags[.type == 'deprecated'])
 
     types = (
         apply . mdox-tag-types ([
@@ -922,9 +925,13 @@ match .comments[
 
     "\n\n"
 
-    if (is-deprecated) {
-        "`deprecated` "
-    }
+    apply . tags-flags([
+        'deprecated'
+        'instance'
+        'global'
+        'static'
+        'inner'
+    ])
 
     if (types) {
         "\n\n"
@@ -946,9 +953,6 @@ match .comments[
 }
 
 
-        //
-        // instance
-        //
         // enum
         //
         // readonly

@@ -27,39 +27,39 @@ var yr = yr || require('yate/lib/runtime.js');
 
     var j4 = [ 1, 0 ];
 
-    function p1(m, c0, i0, l0) {
+    function p2(m, c0, i0, l0) {
         return cmpSN("classdesc", selectNametest('type', c0, [])) || cmpSN("description", selectNametest('type', c0, [])) || cmpSN("desc", selectNametest('type', c0, [])) || cmpSN("file", selectNametest('type', c0, [])) || cmpSN("overview", selectNametest('type', c0, [])) || cmpSN("fileoverview", selectNametest('type', c0, [])) || cmpSN("summary", selectNametest('type', c0, []));
     }
 
-    var j5 = [ 0, 'tags', 2, p1 ];
+    var j6 = [ 0, 'tags', 2, p2 ];
 
-    var j6 = [ 0, 'description' ];
+    var j7 = [ 0, 'description' ];
 
-    function p2(m, c0, i0, l0) {
+    function p3(m, c0, i0, l0) {
         return cmpSN("module", selectNametest('type', c0, []));
     }
 
-    var j7 = [ 0, 'tags', 2, p2 ];
+    var j8 = [ 0, 'tags', 2, p3 ];
 
-    var j8 = [ 0, 'name' ];
-
-    function p3(m, c0, i0, l0) {
-        return cmpSN("version", selectNametest('type', c0, []));
-    }
-
-    var j9 = [ 0, 'tags', 2, p3 ];
+    var j9 = [ 0, 'name' ];
 
     function p4(m, c0, i0, l0) {
-        return cmpSN("copyright", selectNametest('type', c0, []));
+        return cmpSN("version", selectNametest('type', c0, []));
     }
 
     var j10 = [ 0, 'tags', 2, p4 ];
 
     function p5(m, c0, i0, l0) {
-        return cmpSN("author", selectNametest('type', c0, []));
+        return cmpSN("copyright", selectNametest('type', c0, []));
     }
 
     var j11 = [ 0, 'tags', 2, p5 ];
+
+    function p6(m, c0, i0, l0) {
+        return cmpSN("author", selectNametest('type', c0, []));
+    }
+
+    var j12 = [ 0, 'tags', 2, p6 ];
 
     // match .* : mdox-tag-types
     M.t0 = function t0(m, c0, i0, l0, a0, v0) {
@@ -107,8 +107,37 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t1.j = j0;
     M.t1.a = 0;
 
+    // match .* : tags-flags
+    M.t2 = function t2(m, c0, i0, l0, a0, v2) {
+        var r0 = '';
+
+        function p1(m, c0, i0, l0) {
+            return (yr.externals['mdox-array-inarray'])(simpleScalar('type', c0), v2);
+        }
+
+        var j5 = [ 0, 'tags', 2, p1 ];
+
+        r0 += m.a(m, m.s(j5, c0), 'tags-flags-str', a0)
+
+        return r0;
+    };
+    M.t2.j = j0;
+    M.t2.a = 0;
+
+    // match .* : tags-flags-str
+    M.t3 = function t3(m, c0, i0, l0, a0) {
+        var r0 = '';
+
+        r0 += closeAttrs(a0);
+        r0 += "`" + nodeset2xml( ( selectNametest('type', c0, []) ) ) + "` ";
+
+        return r0;
+    };
+    M.t3.j = j0;
+    M.t3.a = 0;
+
     // match .tags[ .type == "classdesc" || .type == "description" || .type == "desc" || .type == "file" || .type == "overview" || .type == "fileoverview" || .type == "summary" ] : item-tag
-    M.t2 = function t2(m, c0, i0, l0, a0) {
+    M.t4 = function t4(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -116,11 +145,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t2.j = j5;
-    M.t2.a = 0;
+    M.t4.j = j6;
+    M.t4.a = 0;
 
     // match .tags[ .type == "module" ] : item-tag
-    M.t3 = function t3(m, c0, i0, l0, a0) {
+    M.t5 = function t5(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -128,11 +157,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t3.j = j7;
-    M.t3.a = 0;
+    M.t5.j = j8;
+    M.t5.a = 0;
 
     // match .tags[ .type == "version" ] : item-tag
-    M.t4 = function t4(m, c0, i0, l0, a0) {
+    M.t6 = function t6(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -143,11 +172,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t4.j = j9;
-    M.t4.a = 0;
+    M.t6.j = j10;
+    M.t6.a = 0;
 
     // match .tags[ .type == "copyright" ] : item-tag
-    M.t5 = function t5(m, c0, i0, l0, a0) {
+    M.t7 = function t7(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -156,11 +185,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t5.j = j10;
-    M.t5.a = 0;
+    M.t7.j = j11;
+    M.t7.a = 0;
 
     // match .tags[ .type == "author" ] : item-tag
-    M.t6 = function t6(m, c0, i0, l0, a0) {
+    M.t8 = function t8(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -169,8 +198,8 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t6.j = j11;
-    M.t6.a = 0;
+    M.t8.j = j12;
+    M.t8.a = 0;
 
     M.matcher = {
         "mdox-tag-types": {
@@ -183,13 +212,23 @@ var yr = yr || require('yate/lib/runtime.js');
                 "t1"
             ]
         },
+        "tags-flags": {
+            "*": [
+                "t2"
+            ]
+        },
+        "tags-flags-str": {
+            "*": [
+                "t3"
+            ]
+        },
         "item-tag": {
             "tags": [
+                "t8",
+                "t7",
                 "t6",
                 "t5",
-                "t4",
-                "t3",
-                "t2"
+                "t4"
             ]
         }
     };

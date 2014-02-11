@@ -100,5 +100,6 @@ var config = {
  * @event Hurl#snowball
  * @type {object}
  * @property {boolean} isPacked Indicates whether the snowball is tightly packed.
+ * @deprecated
  */
 

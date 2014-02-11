@@ -26,6 +26,16 @@ match .* mdox-tag-types-str {
 }
 
 
+match .* tags-flags (array tags) {
+    apply .tags[mdox-array-inarray(.type, tags)] tags-flags-str
+}
+
+match .* tags-flags-str {
+    "`{.type}` "
+}
+
+
+
 match .tags[
     .type == 'classdesc' ||
     .type == 'description' ||
