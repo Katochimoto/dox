@@ -5,17 +5,21 @@ var pkg = require('../package');
 var util = require('util');
 var mdox = require('..');
 
-// options
-
 program
     .version(pkg.version)
     .option('-h, --html', 'output "raw" comments, leaving the markdown intact')
     .option('-d, --debug', 'output parsed comments for debugging')
-    .option('-m, --md', 'output markdown documentation');
+    .option('-m, --md', 'output markdown documentation')
+    .option('-c, --doc', 'generate all documentation')
+    .option('-C, --chdir <path>', 'generate all documentation');
 
-// examples
+program
+    .action(function(cmd, options) {
 
-program.on('--help', function(){
+        console.log(cmd, options);
+
+    })
+.on('--help', function() {
     console.log('  Examples:');
     console.log('');
     console.log('    # stdin');
@@ -23,6 +27,13 @@ program.on('--help', function(){
     console.log('');
     console.log('    # operates over stdio');
     console.log('    $ mdox < myfile.js > myfile.json');
+    console.log('');
+});
+
+
+/*
+program.on('--doc', function() {
+    console.log(program.chdir);
     console.log('');
 });
 
@@ -35,19 +46,14 @@ process.stdin.on('data', function(chunk) {
 });
 
 process.stdin.on('end', function() {
-    var data;
+    if (program.html) {
+        process.stdout.write(mdox.htmlGenerate(buf));
 
-    if (program.md) {
-        data = mdox.mdGenerate(buf, {
-            html: program.html
-        });
-
-        process.stdout.write(data);
+    } else if (program.md) {
+        process.stdout.write(mdox.mdGenerate(buf));
 
     } else {
-        data = mdox.jsonGenerate(buf, {
-            html: program.html
-        });
+        var data = mdox.jsonGenerate(buf);
 
         if (program.debug) {
             process.stdout.write(util.inspect(data, {
@@ -62,3 +68,4 @@ process.stdin.on('end', function() {
     }
 
 }).resume();
+    */
