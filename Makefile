@@ -1,6 +1,7 @@
 TESTS=test/spec/*.js
+VPATH:=tmpl
 
-all: node_modules
+all: node_modules tmpl/_mdox.yate.js tmpl/default.yate.js
 
 node_modules: package.json
 	npm install
@@ -11,17 +12,12 @@ test: node_modules
 	./node_modules/.bin/jshint .
 	./node_modules/.bin/jscs .
 
-docs:
-	@./bin/dox \
-	  --verbose \
-	  lib/* \
-	  --out docs \
-	  --title Dox \
-	  --github visionmedia/dox \
-	  --index index.md
+tmpl/_mdox.yate.js: _mdox.yate node_modules
+	./node_modules/.bin/yate $< > $@
 
-doc-server:
-	@./bin/dox \
-		--server docs
+tmpl/default.yate.js: default.yate _mdox.yate.js
+	./node_modules/.bin/yate $< --import tmpl/_mdox.yate.obj > $@
 
-.PHONY: all test docs
+
+.PHONY: test
+
