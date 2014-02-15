@@ -1,21 +1,21 @@
 module "default"
 import "mdox"
 
-match / {
+match / comments {
 
-    apply .comments[
+    apply .data[
         !(.ignore) &&
         .tags.type != 'ignore' &&
         .matchCtx.type == 'file'
     ] item-comment
 
-    apply .comments[
+    apply .data[
         !(.ignore) &&
         .tags.type != 'ignore' &&
         .tags.type == 'global'
     ] item-comment
 
-    apply .comments[
+    apply .data[
         !(.ignore) &&
         .tags.type != 'ignore' &&
         .tags.type != 'global' &&
@@ -25,7 +25,7 @@ match / {
     "\n\n[TOC]\n\n"
 }
 
-match .comments[!(.matchCtx.type)] item-comment {
+match .data[!(.matchCtx.type)] item-comment {
     /*
     apply . description
     "\n\n"
@@ -35,7 +35,7 @@ match .comments[!(.matchCtx.type)] item-comment {
 /**
  * File description
  */
-match .comments[.matchCtx.type == 'file'] item-comment {
+match .data[.matchCtx.type == 'file'] item-comment {
 
     "# "
     if (.matchCtx.name) {
@@ -80,7 +80,7 @@ match .comments[.matchCtx.type == 'file'] item-comment {
 /**
  * Property description
  */
-match .comments[.matchCtx.type == 'prop'] item-comment {
+match .data[.matchCtx.type == 'prop'] item-comment {
 
     context = (
         if (.matchCtx.context) {
@@ -227,7 +227,7 @@ match .comments[.matchCtx.type == 'prop'] item-comment {
 /**
  * Function description
  */
-match .comments[.matchCtx.type == 'func'] item-comment {
+match .data[.matchCtx.type == 'func'] item-comment {
 
     context = (
         if (.matchCtx.context) {
@@ -460,7 +460,7 @@ match .comments[.matchCtx.type == 'func'] item-comment {
 /**
  * Class description
  */
-match .comments[.matchCtx.type == 'class' || .matchCtx.type == 'module'] item-comment {
+match .data[.matchCtx.type == 'class' || .matchCtx.type == 'module'] item-comment {
 
     name-type = (
         if (.tags[.type == 'class' || .kind == 'class']) {

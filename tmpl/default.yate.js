@@ -31,31 +31,31 @@ var yr = yr || require('yate/lib/runtime.js');
         return !nodeset2boolean( (selectNametest('ignore', c0, [])) ) && !(cmpSN("ignore", m.s(j2, c0))) && cmpSN("file", m.s(j3, c0));
     }
 
-    var j4 = [ 0, 'comments', 2, p0 ];
+    var j4 = [ 0, 'data', 2, p0 ];
 
     function p1(m, c0, i0, l0) {
         return !nodeset2boolean( (selectNametest('ignore', c0, [])) ) && !(cmpSN("ignore", m.s(j2, c0))) && cmpSN("global", m.s(j2, c0));
     }
 
-    var j5 = [ 0, 'comments', 2, p1 ];
+    var j5 = [ 0, 'data', 2, p1 ];
 
     function p2(m, c0, i0, l0) {
         return !nodeset2boolean( (selectNametest('ignore', c0, [])) ) && !(cmpSN("ignore", m.s(j2, c0))) && !(cmpSN("global", m.s(j2, c0))) && !(cmpSN("file", m.s(j3, c0)));
     }
 
-    var j6 = [ 0, 'comments', 2, p2 ];
+    var j6 = [ 0, 'data', 2, p2 ];
 
     function p3(m, c0, i0, l0) {
         return !nodeset2boolean( (m.s(j3, c0)) );
     }
 
-    var j7 = [ 0, 'comments', 2, p3 ];
+    var j7 = [ 0, 'data', 2, p3 ];
 
     function p4(m, c0, i0, l0) {
         return cmpSN("file", m.s(j3, c0));
     }
 
-    var j8 = [ 0, 'comments', 2, p4 ];
+    var j8 = [ 0, 'data', 2, p4 ];
 
     var j9 = [ 0, 'matchCtx', 0, 'name' ];
 
@@ -85,7 +85,7 @@ var yr = yr || require('yate/lib/runtime.js');
         return cmpSN("prop", m.s(j3, c0));
     }
 
-    var j15 = [ 0, 'comments', 2, p8 ];
+    var j15 = [ 0, 'data', 2, p8 ];
 
     var j16 = [ 0, 'matchCtx', 0, 'context' ];
 
@@ -159,7 +159,7 @@ var yr = yr || require('yate/lib/runtime.js');
         return cmpSN("func", m.s(j3, c0));
     }
 
-    var j30 = [ 0, 'comments', 2, p19 ];
+    var j30 = [ 0, 'data', 2, p19 ];
 
     function p20(m, c0, i0, l0) {
         return cmpSN("callback", selectNametest('type', c0, []));
@@ -231,7 +231,7 @@ var yr = yr || require('yate/lib/runtime.js');
         return cmpSN("class", m.s(j3, c0)) || cmpSN("module", m.s(j3, c0));
     }
 
-    var j46 = [ 0, 'comments', 2, p29 ];
+    var j46 = [ 0, 'data', 2, p29 ];
 
     function p30(m, c0, i0, l0) {
         return cmpSN("constructor", selectNametest('type', c0, []));
@@ -275,7 +275,7 @@ var yr = yr || require('yate/lib/runtime.js');
 
     var j53 = [ 0, 'tags', 2, p36 ];
 
-    // match /
+    // match / : comments
     M.t0 = function t0(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -290,7 +290,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t0.j = 1;
     M.t0.a = 1;
 
-    // match .comments[ !( .matchCtx.type ) ] : item-comment
+    // match .data[ !( .matchCtx.type ) ] : item-comment
     M.t1 = function t1(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -299,7 +299,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t1.j = j7;
     M.t1.a = 0;
 
-    // match .comments[ .matchCtx.type == "file" ] : item-comment
+    // match .data[ .matchCtx.type == "file" ] : item-comment
     M.t2 = function t2(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -340,7 +340,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t2.j = j8;
     M.t2.a = 0;
 
-    // match .comments[ .matchCtx.type == "prop" ] : item-comment
+    // match .data[ .matchCtx.type == "prop" ] : item-comment
     M.t3 = function t3(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -489,7 +489,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t3.j = j15;
     M.t3.a = 0;
 
-    // match .comments[ .matchCtx.type == "func" ] : item-comment
+    // match .data[ .matchCtx.type == "func" ] : item-comment
     M.t4 = function t4(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -741,7 +741,7 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t4.j = j30;
     M.t4.a = 0;
 
-    // match .comments[ .matchCtx.type == "class" || .matchCtx.type == "module" ] : item-comment
+    // match .data[ .matchCtx.type == "class" || .matchCtx.type == "module" ] : item-comment
     M.t5 = function t5(m, c0, i0, l0, a0) {
         var r0 = '';
 
@@ -871,13 +871,13 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t5.a = 0;
 
     M.matcher = {
-        "": {
+        "comments": {
             "": [
                 "t0"
             ]
         },
         "item-comment": {
-            "comments": [
+            "data": [
                 "t5",
                 "t4",
                 "t3",
