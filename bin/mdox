@@ -1,63 +1,74 @@
 #!/usr/bin/env node
 
-var pkg = require('../package');
 var util = require('util');
 var mdox = require('..');
-var argv = require('optimist')
-    .boolean('help')
-    .string('doc')
-    .boolean('html')
-    .boolean('md')
-    .boolean('debug')
-    .alias('d', 'debug')
-    .alias('h', 'help')
-    .describe('d', 'output parsed comments for debugging')
-    .describe('h', 'output help')
-    .argv;
+var cli = require('cli').enable('help', 'version', 'status');
 
-if (argv.help) {
-    console.log('  Examples:');
-    console.log('');
-    console.log('    # stdin');
-    console.log('    $ mdox > myfile.json');
-    console.log('');
-    console.log('    # operates over stdio');
-    console.log('    $ mdox < myfile.js > myfile.json');
-    console.log('');
+cli.setApp('mdox', '0.0.2');
 
-} else if (argv.doc) {
+cli.parse({
+    format: ['f', 'Parse output format', ['json', 'md', 'html']],
+    pretty: [false, 'JSON pretty print'],
+    output: ['o', 'Write to FILE rather than the console', 'file'],
+    cwd: ['c', 'The current working directory in which to search.', 'dir']
+}, [ 'generate', 'parse' ]);
 
 
-} else {
-    var buf = '';
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', function(chunk) {
-        buf += chunk;
-    });
+cli.main(function(args, options) {
+    switch (this.command) {
+        case 'generate':
+            mdox.docGenerate(options.cwd || './');
+            break;
 
-    process.stdin.on('end', function() {
-        if (argv.html) {
-            process.stdout.write(mdox.htmlGenerate(buf));
+        case 'parse':
+            parse.call(this, args, options);
+            break;
+    }
+});
 
-        } else if (argv.md) {
-            process.stdout.write(mdox.mdGenerate(buf));
+function parse(args, options) {
+    this.withStdin(function(str) {
+        var stream;
+        var output = '';
 
-        } else {
-            var data = mdox.jsonGenerate(buf);
+        switch (options.format) {
+            case 'md':
+                output = mdox.mdGenerate(str);
+                break;
 
-            if (argv.debug) {
-                process.stdout.write(util.inspect(data, {
-                    showHidden: false,
-                    depth: Infinity,
-                    colors: true
-                }) + '\n');
+            case 'html':
+                output = mdox.htmlGenerate(str);
+                break;
 
-            } else {
-                process.stdout.write(JSON.stringify(data, null, 4));
-            }
+            case 'json':
+            default:
+                output = mdox.jsonGenerate(str);
+                if (options.pretty) {
+                    output = util.inspect(output, {
+                        showHidden: false,
+                        depth: Infinity,
+                        colors: true
+                    }) + '\n';
+
+                } else {
+                    output = JSON.stringify(output, null, 4);
+                }
         }
 
-    });
+        try {
+            if (options.output) {
+                stream = this.native.fs.createWriteStream(options.output);
 
-    process.stdin.resume();
+            } else {
+                stream = process.stdout;
+            }
+
+            stream.write(output);
+
+        } catch (e) {
+            this.fatal('Could not write to output stream');
+        }
+    });
 }
+
+
