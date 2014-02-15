@@ -30,7 +30,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -47,7 +47,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -64,7 +64,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -81,7 +81,7 @@ describe('parse.comments', function() {
                 ignore: true,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -98,7 +98,7 @@ describe('parse.comments', function() {
                 ignore: true,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -115,7 +115,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '456',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -132,7 +132,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });
@@ -149,7 +149,7 @@ describe('parse.comments', function() {
                 ignore: false,
                 code: '',
                 ctx: {},
-                matchCtx: { type: '', name: undefined, context: undefined }
+                matchCtx: { type: '', name: undefined, context: 'global' }
             } ]);
         });
     });

@@ -26,8 +26,10 @@ match / {
 }
 
 match .comments[!(.matchCtx.type)] item-comment {
+    /*
     apply . description
     "\n\n"
+    */
 }
 
 /**
@@ -35,7 +37,7 @@ match .comments[!(.matchCtx.type)] item-comment {
  */
 match .comments[.matchCtx.type == 'file'] item-comment {
 
-    "# "
+    "## "
     if (.matchCtx.name) {
         .matchCtx.name
 
@@ -458,7 +460,7 @@ match .comments[.matchCtx.type == 'func'] item-comment {
 /**
  * Class description
  */
-match .comments[.matchCtx.type == 'class'] item-comment {
+match .comments[.matchCtx.type == 'class' || .matchCtx.type == 'module'] item-comment {
 
     name-type = (
         if (.tags[.type == 'class' || .kind == 'class']) {
@@ -466,6 +468,9 @@ match .comments[.matchCtx.type == 'class'] item-comment {
 
         } else if (.tags[.type == 'constructor']) {
             "Class"
+
+        } else if (.tags[.type == 'module' || .kind == 'module']) {
+            "Module"
 
         } else if (.tags[.type == 'namespace' || .kind == 'namespace']) {
             "Namespace"
@@ -496,6 +501,7 @@ match .comments[.matchCtx.type == 'class'] item-comment {
 
     types = (
         apply . mdox-tag-types ([
+            'module'
             'class'
             'constructor'
             'namespace'
@@ -576,85 +582,5 @@ match .comments[.matchCtx.type == 'class'] item-comment {
     // augments
     // extends
     // mixes
-}
-
-
-/**
- * Module description
- */
-match .comments[.matchCtx.type == 'module'] item-comment {
-
-    types = (
-        apply . mdox-tag-types ([
-            'module'
-        ])
-    )
-
-    name-type = (
-        "Module"
-    )
-
-    name = (
-        if (.matchCtx.name) {
-            .matchCtx.name
-
-        } else {
-            "Undefined"
-        }
-    )
-
-    throws-description = (
-        apply . type-description ([
-            'throws'
-            'exception'
-        ])
-    )
-
-
-
-    "## "
-    if (.tags[.type == 'title'].description) {
-        .tags[.type == 'title'].description
-
-    } else {
-        if (!mdox-string-empty(name-type)) {
-            name-type
-            ": "
-        }
-
-        name
-    }
-
-    "\n\n"
-
-    apply . access
-
-    apply . tags-flags([
-        'deprecated'
-        'instance'
-        'global'
-        'static'
-        'inner'
-    ])
-
-    if (types) {
-        "\n\n"
-        "**Type:** {types}"
-    }
-
-    "\n\n"
-
-    apply . description
-
-    if (!mdox-string-empty(throws-description)) {
-        "\n\n"
-        "*Exceptions:*"
-        "\n"
-        throws-description
-    }
-
-    apply . example
-
-    "\n\n"
 }
 

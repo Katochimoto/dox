@@ -1,4 +1,4 @@
-# Sample file
+## Sample file
 
 `Version: 1.2.3` `Author: Rikishi` 
 
@@ -9,9 +9,9 @@ Sample page description
 StackEdit stores your documents in your browser,
 which means all your documents are automatically saved locally and are accessible offline!
 
-qweqweqwe
+### Module: SampleModule
 
-## Module: SampleModule
+***
 
 `deprecated` 
 
