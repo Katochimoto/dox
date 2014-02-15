@@ -6,7 +6,7 @@ match / {
     apply .comments[
         !(.ignore) &&
         .tags.type != 'ignore' &&
-        (.tags.type == 'file' || .tags.type == 'overview' || .tags.type == 'fileoverview' || .tags.kind == 'file')
+        .matchCtx.type == 'file'
     ] item-comment
 
     apply .comments[
@@ -19,39 +19,25 @@ match / {
         !(.ignore) &&
         .tags.type != 'ignore' &&
         .tags.type != 'global' &&
-        .tags.type != 'file' &&
-        .tags.type != 'overview' &&
-        .tags.type != 'fileoverview' &&
-        .tags.kind != 'file'
+        .matchCtx.type != 'file'
     ] item-comment
 
     "\n\n[TOC]\n\n"
 }
 
+match .comments[!(.matchCtx.type)] item-comment {
+
+}
+
 /**
  * File description
  */
-match .comments[
-    .tags.type == 'file' ||
-    .tags.type == 'overview' ||
-    .tags.type == 'fileoverview' ||
-
-    .tags.kind == 'file'
-] item-comment {
+match .comments[.matchCtx.type == 'file'] item-comment {
 
     name = (
         " "
-        if (.tags[.type == 'title'].description) {
-            .tags[.type == 'title'].description
-
-        } else if (.tags[.type == 'file'].description) {
-            .tags[.type == 'file'].description
-
-        } else if (.tags[.type == 'overview'].description) {
-            .tags[.type == 'overview'].description
-
-        } else if (.tags[.type == 'fileoverview'].description) {
-            .tags[.type == 'fileoverview'].description
+        if (.matchCtx.name) {
+            .matchCtx.name
 
         } else {
             "Undefined"
@@ -96,31 +82,11 @@ match .comments[
 /**
  * Property description
  */
-match .comments[
-    .tags.type == 'constant' ||
-    .tags.type == 'const' ||
-    .tags.type == 'var' ||
-    .tags.type == 'member' ||
-    .ctx.type == 'property' ||
-    .ctx.type == 'declaration' ||
-
-    .tags.kind == 'constant' ||
-    .tags.kind == 'member'
-] item-comment {
+match .comments[.matchCtx.type == 'prop'] item-comment {
 
     context = (
-        if (.tags[.type == 'memberof'].parent) {
-            .tags[.type == 'memberof'].parent
-
-        } else if (.tags[.type == 'memberOf'].parent) {
-            .tags[.type == 'memberOf'].parent
-
-        } else if (.ctx[.type == 'property'].cons) {
-            .ctx[.type == 'property'].cons
-
-        } else if (.ctx[.type == 'declaration'].receiver) {
-            .ctx[.type == 'declaration'].receiver
-
+        if (.matchCtx.context) {
+            .matchCtx.context
         } else {
             ""
         }
@@ -169,29 +135,11 @@ match .comments[
     )
 
     name = (
-        if (.tags[.type == 'constant'].name) {
-            .tags[.type == 'constant'].name
-
-        } else if (.tags[.type == 'const'].name) {
-            .tags[.type == 'const'].name
-
-        } else if (.tags[.type == 'member'].name) {
-            .tags[.type == 'member'].name
-
-        } else if (.tags[.type == 'var'].name) {
-            .tags[.type == 'var'].name
-
-        } else if (.tags[.type == 'name'].name) {
-            .tags[.type == 'name'].name
-
-        } else if (.ctx[.type == 'property'].name) {
-            .ctx[.type == 'property'].name
-
-        } else if (.ctx[.type == 'declaration'].name) {
-            .ctx[.type == 'declaration'].name
+        if (.matchCtx.name) {
+            .matchCtx.name
 
         } else {
-            'Undefined'
+            "Undefined"
         }
     )
 
@@ -281,29 +229,11 @@ match .comments[
 /**
  * Function description
  */
-match .comments[
-    .tags.type == 'method' ||
-    .tags.type == 'function' ||
-    .tags.type == 'func' ||
-    .tags.type == 'callback' ||
-    .tags.type == 'constructs' ||
-    .ctx.type == 'method' ||
-    .ctx.type == 'function'
-] item-comment {
+match .comments[.matchCtx.type == 'func'] item-comment {
 
     context = (
-        if (.tags[.type == 'memberof'].parent) {
-            .tags[.type == 'memberof'].parent
-
-        } else if (.tags[.type == 'memberOf'].parent) {
-            .tags[.type == 'memberOf'].parent
-
-        } else if (.ctx[.type == 'method'].cons) {
-            .ctx[.type == 'method'].cons
-
-        } else if (.ctx[.type == 'method'].receiver) {
-            .ctx[.type == 'method'].receiver
-
+        if (.matchCtx.context) {
+            .matchCtx.context
         } else {
             ""
         }
@@ -352,30 +282,11 @@ match .comments[
     )
 
     name = (
-        if (.tags[.type == 'constructs'].name) {
-            .tags[.type == 'constructs'].name
+        if (.matchCtx.name) {
+            .matchCtx.name
 
-        } else if (.tags[.type == 'callback'].name) {
-            .tags[.type == 'callback'].name
-
-        } else if (.tags[.type == 'func'].name) {
-            .tags[.type == 'func'].name
-
-        } else if (.tags[.type == 'function'].name) {
-            .tags[.type == 'function'].name
-
-        } else if (.tags[.type == 'method'].name) {
-            .tags[.type == 'method'].name
-
-        } else if (.tags[.type == 'name'].name) {
-            .tags[.type == 'name'].name
-
-        } else if (.ctx[.type == 'method'].name) {
-            .ctx[.type == 'method'].name
-
-        } else if (.ctx[.type == 'function'].name) {
-            .ctx[.type == 'function'].name
-
+        } else {
+            "Undefined"
         }
     )
 
@@ -535,24 +446,7 @@ match .comments[
 /**
  * Class description
  */
-match .comments[
-    .tags.type == 'class' ||
-    .tags.type == 'classdesc' ||
-    .tags.type == 'constructor' ||
-    .tags.type == 'namespace' ||
-    .tags.type == 'mixin' ||
-    .tags.type == 'lends' ||
-    .tags.type == 'event' ||
-    .tags.type == 'typedef' ||
-    .tags.type == 'external' ||
-
-    .tags.kind == 'namespace' ||
-    .tags.kind == 'typedef' ||
-    .tags.kind == 'mixin' ||
-    .tags.kind == 'class' ||
-    .tags.kind == 'event' ||
-    .tags.kind == 'external'
-] item-comment {
+match .comments[.matchCtx.type == 'class'] item-comment {
 
     name-type = (
         if (.tags[.type == 'class' || .kind == 'class']) {
@@ -582,41 +476,8 @@ match .comments[
     )
 
     name = (
-        if (.tags[.type == 'class'].name) {
-            .tags[.type == 'class'].name
-
-        } else if (.tags[.type == 'constructor'].name) {
-            .tags[.type == 'constructor'].name
-
-        } else if (.tags[.type == 'namespace'].name) {
-            .tags[.type == 'namespace'].name
-
-        } else if (.tags[.type == 'mixin'].name) {
-            .tags[.type == 'mixin'].name
-
-        } else if (.tags[.type == 'event'].name) {
-            .tags[.type == 'event'].name
-
-        } else if (.tags[.type == 'typedef'].name) {
-            .tags[.type == 'typedef'].name
-
-        } else if (.tags[.type == 'external'].name) {
-            .tags[.type == 'external'].name
-
-        } else if (.tags[.type == 'name'].name) {
-            .tags[.type == 'name'].name
-
-        } else if (.ctx[.type == 'function'].name) {
-            .ctx[.type == 'function'].name
-
-        } else if (.ctx[.type == 'declaration'].name) {
-            .ctx[.type == 'declaration'].name
-
-        } else if (.ctx[.type == 'property'].name) {
-            .ctx[.type == 'property'].name
-
-        } else if (.ctx[.type == 'method'].name) {
-            .ctx[.type == 'method'].name
+        if (.matchCtx.name) {
+            .matchCtx.name
 
         } else {
             "Undefined"
@@ -712,10 +573,7 @@ match .comments[
 /**
  * Module description
  */
-match .comments[
-    .tags.type == 'module' ||
-    .tags.kind == 'module'
-] item-comment {
+match .comments[.matchCtx.type == 'module'] item-comment {
 
     types = (
         apply . mdox-tag-types ([
@@ -728,23 +586,8 @@ match .comments[
     )
 
     name = (
-        if (.tags[.type == 'module'].name) {
-            .tags[.type == 'module'].name
-
-        } else if (.tags[.type == 'name'].name) {
-            .tags[.type == 'name'].name
-
-        } else if (.ctx[.type == 'function'].name) {
-            .ctx[.type == 'function'].name
-
-        } else if (.ctx[.type == 'declaration'].name) {
-            .ctx[.type == 'declaration'].name
-
-        } else if (.ctx[.type == 'property'].name) {
-            .ctx[.type == 'property'].name
-
-        } else if (.ctx[.type == 'method'].name) {
-            .ctx[.type == 'method'].name
+        if (.matchCtx.name) {
+            .matchCtx.name
 
         } else {
             "Undefined"

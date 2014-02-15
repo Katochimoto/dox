@@ -17,7 +17,7 @@ describe('mdGenerate.mdox', function() {
         fixture('sample1', function(err, str) {
             var comments = mdGenerate(str);
 
-            console.log("'%s'", comments);
+            //console.log("'%s'", comments);
 
         });
     });

@@ -42,7 +42,8 @@
         "uglify-js": "2.3.6",
         "requirer": "0.0.1",
         "mocha": "1.12.0",
-        "expect.js": "0.2.0"
+        "expect.js": "0.2.0",
+        "jpath": "*"
     },
     "engines": {
         "node": "*"

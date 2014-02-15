@@ -1,6 +1,6 @@
 # Sample file
 
-`Version: 1.2.3` `Author: Rikishi`
+`Version: 1.2.3` `Author: Rikishi` 
 
 © Rikishi 2014
 
@@ -11,7 +11,7 @@ which means all your documents are automatically saved locally and are accessibl
 
 ## Module: SampleModule
 
-`deprecated`
+`deprecated` 
 
 **Type:** `jQuery`
 
@@ -21,7 +21,7 @@ Sample module description
 
 ***
 
-`deprecated`
+`deprecated` 
 
 Class description
 
@@ -37,7 +37,7 @@ Sample class description
 
 ***
 
-`public` `static` `deprecated` `Alias: Apple.Core` `This: jQuery`
+`public` `static` `deprecated` `Alias: Apple.Core` `This: jQuery` 
 
 summary descr
 
@@ -108,7 +108,7 @@ Sample description
 
 ***
 
-`deprecated`
+`deprecated` 
 
 Snowball event.
 
@@ -133,3 +133,4 @@ The complete Triforce, or one or more components of the Triforce.
 
 
 [TOC]
+
