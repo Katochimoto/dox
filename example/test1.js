@@ -1,20 +1,3 @@
-/**
- * StackEdit stores your documents in your browser,
- * which means all your documents are automatically saved locally and are accessible offline!
- *
- * @file Sample file
- * @description Sample page description
- * @copyright Rikishi 2014
- * @author Rikishi
- * @version 1.2.3
- */
-
-
-/**
- * Sample module description
- * @module {jQuery} SampleModule
- * @deprecated
- */
 
 
 /**
@@ -24,7 +7,6 @@
  * @classdesc Class description
  * @description Tag description
  * @desc Tag desc
- * @deprecated
  */
 function SampleClass() {
 
@@ -46,22 +28,14 @@ function SampleClass() {
  * // return { "zxc": 456 }
  * SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
  *
- * @alias Apple.Core
  * @summary summary descr
  * @method
- * @memberof Qwe
- * @static
  * @param {String=} a description a
  * @arg {?Object} [b] description b
  * @arg {!Number} [b.qwe=123] description b.qwe
  * @arg {String} [b.asd=asd] description b.asd
  * @argument {(number|boolean|array)} [c=[1,2,3]]
  * @return {Object} description return
- * @deprecated
- * @access public
- * @throws {Error} free-form description
- * @fires Milkshake#drain
- * @this jQuery
  */
 SampleClass.prototype.sampleFunction = function(a, b, c) {
 
@@ -74,41 +48,3 @@ SampleClass.prototype.sampleFunction = function(a, b, c) {
  */
 SampleClass.prototype.test = 123;
 
-
-
-/**
- * @namespace
- * @property {object}  defaults               - The default values for parties.
- * @property {number}  defaults.players       - The default number of players.
- * @property {string}  defaults.level         - The default level for the party.
- * @property {object}  defaults.treasure      - The default treasure.
- * @property {number}  defaults.treasure.gold - How much gold the party starts with.
- */
-var config = {
-    defaults: {
-        players: 1,
-        level:   'beginner',
-        treasure: {
-            gold: 0
-        }
-    }
-};
-
-/**
- * Snowball event.
- *
- * @event Hurl#snowball
- * @type {object}
- * @property {boolean} isPacked Indicates whether the snowball is tightly packed.
- * @deprecated
- */
-
-
-
-/**
- * The complete Triforce, or one or more components of the Triforce.
- * @typedef {Object} WishGranter~Triforce
- * @property {boolean} hasCourage - Indicates whether the Courage component is present.
- * @property {boolean} hasPower - Indicates whether the Power component is present.
- * @property {boolean} hasWisdom - Indicates whether the Wisdom component is present.
- */
