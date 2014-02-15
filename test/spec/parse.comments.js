@@ -29,7 +29,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: false,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -45,7 +46,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: false,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -61,7 +63,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: false,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -77,7 +80,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: true,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -93,7 +97,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: true,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -109,7 +114,8 @@ describe('parse.comments', function() {
                 description: { full: '123', summary: '123', body: '' },
                 ignore: false,
                 code: '456',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -125,7 +131,8 @@ describe('parse.comments', function() {
                 description: { full: 'summary\n\nbody', summary: 'summary', body: 'body' },
                 ignore: false,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
@@ -141,7 +148,8 @@ describe('parse.comments', function() {
                 description: { full: 'summary\n\nbody', summary: 'summary', body: 'body' },
                 ignore: false,
                 code: '',
-                ctx: {}
+                ctx: {},
+                matchCtx: { type: '', name: undefined, context: undefined }
             } ]);
         });
     });
