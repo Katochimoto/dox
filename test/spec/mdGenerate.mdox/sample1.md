@@ -1,4 +1,4 @@
-## Sample file
+# Sample file
 
 `Version: 1.2.3` `Author: Rikishi` 
 
@@ -9,7 +9,7 @@ Sample page description
 StackEdit stores your documents in your browser,
 which means all your documents are automatically saved locally and are accessible offline!
 
-### Module: SampleModule
+## Module: SampleModule
 
 ***
 
@@ -19,7 +19,7 @@ which means all your documents are automatically saved locally and are accessibl
 
 Sample module description
 
-### Class: SampleClass
+## Class: SampleClass
 
 ***
 
@@ -33,7 +33,17 @@ Tag desc
 
 Sample class description
 
-### Class: Qwe
+### Property: test
+
+ *SampleClass.* **test** `Number` = ``123``
+
+***
+
+
+
+Sample description
+
+## Class: Qwe
 
 ***
 
@@ -41,7 +51,7 @@ Sample class description
 
 
 
-#### Method: sampleFunction
+### Method: sampleFunction
 
  *Qwe:* **sampleFunction** ([`String` a], [`Object` b], [`number|boolean|array` c]) `Object`
 
@@ -89,25 +99,7 @@ SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 ```
 
-### Class: SampleClass
-
-***
-
-
-
-
-
-#### Property: test
-
- *SampleClass.* **test** `Number` = ``123``
-
-***
-
-
-
-Sample description
-
-### Namespace: config
+## Namespace: config
 
 ***
 
@@ -122,7 +114,7 @@ Sample description
  - defaults.treasure `object` : - The default treasure.
  - defaults.treasure.gold `number` : - How much gold the party starts with.
 
-### Class: Hurl
+## Class: Hurl
 
 ***
 
@@ -130,7 +122,7 @@ Sample description
 
 
 
-#### Event: snowball
+### Event: snowball
 
  *Hurl.* **snowball** () 
 
@@ -143,7 +135,7 @@ Snowball event.
 *Propertys:*
  - isPacked `boolean` : Indicates whether the snowball is tightly packed.
 
-### Type: WishGranter~Triforce
+## Type: WishGranter~Triforce
 
 ***
 

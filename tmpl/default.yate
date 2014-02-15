@@ -37,7 +37,7 @@ match .comments[!(.matchCtx.type)] item-comment {
  */
 match .comments[.matchCtx.type == 'file'] item-comment {
 
-    "## "
+    "# "
     if (.matchCtx.name) {
         .matchCtx.name
 
@@ -170,7 +170,7 @@ match .comments[.matchCtx.type == 'prop'] item-comment {
         }
     )
 
-    "#### "
+    "### "
     if (.tags[.type == 'title'].description) {
         .tags[.type == 'title'].description
 
@@ -362,7 +362,7 @@ match .comments[.matchCtx.type == 'func'] item-comment {
     )
 
 
-    "#### "
+    "### "
     if (.tags[.type == 'title'].description) {
         .tags[.type == 'title'].description
 
@@ -524,7 +524,7 @@ match .comments[.matchCtx.type == 'class' || .matchCtx.type == 'module'] item-co
 
 
 
-    "### "
+    "## "
     if (.tags[.type == 'title'].description) {
         .tags[.type == 'title'].description
 
