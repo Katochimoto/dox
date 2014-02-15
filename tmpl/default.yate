@@ -26,7 +26,8 @@ match / {
 }
 
 match .comments[!(.matchCtx.type)] item-comment {
-
+    apply . description
+    "\n\n"
 }
 
 /**
@@ -34,18 +35,13 @@ match .comments[!(.matchCtx.type)] item-comment {
  */
 match .comments[.matchCtx.type == 'file'] item-comment {
 
-    name = (
-        " "
-        if (.matchCtx.name) {
-            .matchCtx.name
+    "# "
+    if (.matchCtx.name) {
+        .matchCtx.name
 
-        } else {
-            "Undefined"
-        }
-    )
-
-    "#"
-    name
+    } else {
+        "Undefined"
+    }
 
     "\n\n"
 
@@ -270,6 +266,9 @@ match .comments[.matchCtx.type == 'func'] item-comment {
         } else if (.tags[.type == 'method'].name) {
             "Method"
 
+        } else if (.tags[.type == 'event' || .kind == 'event']) {
+            "Event"
+
         } else if (.ctx[.type == 'method'].name) {
             "Method"
 
@@ -354,6 +353,12 @@ match .comments[.matchCtx.type == 'func'] item-comment {
         ])
     )
 
+    prop-description = (
+        apply . argument-description ([
+            'property'
+        ])
+    )
+
 
     "#### "
     if (.tags[.type == 'title'].description) {
@@ -415,6 +420,13 @@ match .comments[.matchCtx.type == 'func'] item-comment {
         args-description
     }
 
+    if (!mdox-string-empty(prop-description)) {
+        "\n\n"
+        "*Propertys:*"
+        "\n"
+        prop-description
+    }
+
     if (!mdox-string-empty(return-description)) {
         "\n\n"
         "*Returns:*"
@@ -460,9 +472,6 @@ match .comments[.matchCtx.type == 'class'] item-comment {
 
         } else if (.tags[.type == 'mixin' || .kind == 'mixin']) {
             "Mixin"
-
-        } else if (.tags[.type == 'event' || .kind == 'event']) {
-            "Event"
 
         } else if (.tags[.type == 'typedef' || .kind == 'typedef']) {
             "Type"

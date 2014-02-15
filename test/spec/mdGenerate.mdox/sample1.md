@@ -9,6 +9,8 @@ Sample page description
 StackEdit stores your documents in your browser,
 which means all your documents are automatically saved locally and are accessible offline!
 
+qweqweqwe
+
 ## Module: SampleModule
 
 `deprecated` 
@@ -30,6 +32,14 @@ Tag description
 Tag desc
 
 Sample class description
+
+### Class: Qwe
+
+***
+
+
+
+
 
 #### Method: sampleFunction
 
@@ -79,6 +89,14 @@ SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 SampleClass.sampleFunction("qwe", { "asd": 123 }, [ 1, 2, 3])
 ```
 
+### Class: SampleClass
+
+***
+
+
+
+
+
 #### Property: test
 
  *SampleClass.* **test** `Number` = ``123``
@@ -104,7 +122,17 @@ Sample description
  - defaults.treasure `object` : - The default treasure.
  - defaults.treasure.gold `number` : - How much gold the party starts with.
 
-### Event: Hurl#snowball
+### Class: Hurl
+
+***
+
+
+
+
+
+#### Event: snowball
+
+ *Hurl.* **snowball** () 
 
 ***
 
