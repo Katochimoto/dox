@@ -25,6 +25,14 @@ match / comments {
     "\n\n[TOC]\n\n"
 }
 
+
+match / toc {
+
+    "[Publish a document](qwe/qqwe.asd)"
+    "> asdasd"
+}
+
+
 match .data[!(.matchCtx.type)] item-comment {
     /*
     apply . description

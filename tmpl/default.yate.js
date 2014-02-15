@@ -290,17 +290,30 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t0.j = 1;
     M.t0.a = 1;
 
-    // match .data[ !( .matchCtx.type ) ] : item-comment
+    // match / : toc
     M.t1 = function t1(m, c0, i0, l0, a0) {
+        var r0 = '';
+
+        r0 += closeAttrs(a0);
+        r0 += "[Publish a document](qwe/qqwe.asd)";
+        r0 += "&gt; asdasd";
+
+        return r0;
+    };
+    M.t1.j = 1;
+    M.t1.a = 1;
+
+    // match .data[ !( .matchCtx.type ) ] : item-comment
+    M.t2 = function t2(m, c0, i0, l0, a0) {
         var r0 = '';
 
         return r0;
     };
-    M.t1.j = j7;
-    M.t1.a = 0;
+    M.t2.j = j7;
+    M.t2.a = 0;
 
     // match .data[ .matchCtx.type == "file" ] : item-comment
-    M.t2 = function t2(m, c0, i0, l0, a0) {
+    M.t3 = function t3(m, c0, i0, l0, a0) {
         var r0 = '';
 
         r0 += closeAttrs(a0);
@@ -337,11 +350,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t2.j = j8;
-    M.t2.a = 0;
+    M.t3.j = j8;
+    M.t3.a = 0;
 
     // match .data[ .matchCtx.type == "prop" ] : item-comment
-    M.t3 = function t3(m, c0, i0, l0, a0) {
+    M.t4 = function t4(m, c0, i0, l0, a0) {
         var r0 = '';
 
         //  var context : scalar
@@ -486,11 +499,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t3.j = j15;
-    M.t3.a = 0;
+    M.t4.j = j15;
+    M.t4.a = 0;
 
     // match .data[ .matchCtx.type == "func" ] : item-comment
-    M.t4 = function t4(m, c0, i0, l0, a0) {
+    M.t5 = function t5(m, c0, i0, l0, a0) {
         var r0 = '';
 
         //  var context : scalar
@@ -738,11 +751,11 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t4.j = j30;
-    M.t4.a = 0;
+    M.t5.j = j30;
+    M.t5.a = 0;
 
     // match .data[ .matchCtx.type == "class" || .matchCtx.type == "module" ] : item-comment
-    M.t5 = function t5(m, c0, i0, l0, a0) {
+    M.t6 = function t6(m, c0, i0, l0, a0) {
         var r0 = '';
 
         //  var name-type : scalar
@@ -867,8 +880,8 @@ var yr = yr || require('yate/lib/runtime.js');
 
         return r0;
     };
-    M.t5.j = j46;
-    M.t5.a = 0;
+    M.t6.j = j46;
+    M.t6.a = 0;
 
     M.matcher = {
         "comments": {
@@ -876,13 +889,18 @@ var yr = yr || require('yate/lib/runtime.js');
                 "t0"
             ]
         },
+        "toc": {
+            "": [
+                "t1"
+            ]
+        },
         "item-comment": {
             "data": [
+                "t6",
                 "t5",
                 "t4",
                 "t3",
-                "t2",
-                "t1"
+                "t2"
             ]
         }
     };
