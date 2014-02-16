@@ -586,6 +586,10 @@ match .data[.matchCtx.type == 'class' || .matchCtx.type == 'module'] item-commen
         'inner'
     ])
 
+    if (!mdox-string-empty(.tags[.type == 'alias'].name)) {
+        "`Alias: {.tags[.type == 'alias'].name}` "
+    }
+
     if (types) {
         "\n\n"
         "**Type:** {types}"

@@ -903,6 +903,9 @@ var yr = yr || require('yate/lib/runtime.js');
 
             return r0;
         })())
+        if ((!(yr.externals['mdox-string-empty'])(nodeset2scalar( m.s(j35, c0) )))) {
+            r0 += "`Alias: " + nodeset2xml( ( m.s(j35, c0) ) ) + "` ";
+        }
         if ((v24)) {
             r0 += "\n\n";
             r0 += "**Type:** " + ( v24 );
