@@ -363,7 +363,7 @@ var yr = yr || require('yate/lib/runtime.js');
         var r0 = '';
 
         r0 += closeAttrs(a0);
-        r0 += "# ";
+        r0 += "## ";
         if (nodeset2boolean( (m.s(j15, c0)) )) {
             r0 += nodeset2xml( m.s(j15, c0) );
         } else {

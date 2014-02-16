@@ -72,7 +72,7 @@ match .data[!(.matchCtx.type)] item-comment {
  */
 match .data[.matchCtx.type == 'file'] item-comment {
 
-    "# "
+    "## "
     if (.matchCtx.name) {
         .matchCtx.name
 
