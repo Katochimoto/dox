@@ -6,5 +6,5 @@
 
   > Bla Bla Bla File Description
 
-  > [`SampleClass`](context/SampleClass.md)
+  > [`Hurl`](context/Hurl.md) [`SampleClass`](context/SampleClass.md) [`WishGranter~Triforce`](context/WishGranter~Triforce.md) [`global`](context/global.md)
 

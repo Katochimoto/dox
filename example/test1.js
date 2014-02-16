@@ -51,3 +51,25 @@ SampleClass.prototype.sampleFunction = function(a, b, c) {
  */
 SampleClass.prototype.test = 123;
 
+
+
+/**
+ * Snowball event.
+ *
+ * @event Hurl#snowball
+ * @type {object}
+ * @property {boolean} isPacked Indicates whether the snowball is tightly packed.
+ * @deprecated
+ */
+
+
+
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} WishGranter~Triforce
+ * @property {boolean} hasCourage - Indicates whether the Courage component is present.
+ * @property {boolean} hasPower - Indicates whether the Power component is present.
+ * @property {boolean} hasWisdom - Indicates whether the Wisdom component is present.
+ */
+
+
