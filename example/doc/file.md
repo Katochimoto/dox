@@ -6,5 +6,5 @@
 
   > Bla Bla Bla File Description
 
-  > [`SampleClass`](context/SampleClass.md) [`global`](context/global.md)
+  > [`SampleClass`](context/SampleClass.md)
 
