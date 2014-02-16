@@ -192,16 +192,17 @@ var yr = yr || require('yate/lib/runtime.js');
     M.t5 = function t5(m, c0, i0, l0, a0) {
         var r0 = '';
 
-        //  var example : scalar
+        //  var example : xml
         var r1 = '';
         var a1 = { a: {} };
+        r1 += closeAttrs(a1);
         var items0 = (m.s(j9, c0));
         for (var i1 = 0, l1 = items0.length; i1 < l1; i1++) {
             var c1 = items0[ i1 ];
             if ((i1 != 0)) {
                 r1 += "\n\n";
             }
-            r1 += simpleScalar('title', c1);
+            r1 += nodeset2xml( selectNametest('title', c1, []) );
             r1 += "\n";
             r1 += "```js\n";
             r1 += simpleScalar('description', c1);
@@ -210,11 +211,11 @@ var yr = yr || require('yate/lib/runtime.js');
         var v5 = r1;
 
         r0 += closeAttrs(a0);
-        if ((!(yr.externals['mdox-string-empty'])(v5))) {
+        if ((!(yr.externals['mdox-string-empty'])(xml2scalar( v5 )))) {
             r0 += "\n\n";
             r0 += "##### **Example**";
             r0 += "\n\n";
-            r0 += scalar2xml( v5 );
+            r0 += v5;
         }
 
         return r0;

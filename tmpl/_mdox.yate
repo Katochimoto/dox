@@ -70,7 +70,7 @@ match .* example {
             .title
             "\n"
             "```js\n"
-            .description
+            html(.description)
             "\n```"
         }
     )
