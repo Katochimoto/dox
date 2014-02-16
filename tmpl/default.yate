@@ -27,9 +27,34 @@ match / comments {
 
 
 match / toc {
+    data = sort(.data, string(.title))
+    for (data) {
+        "- [{.title}]({.linkMd})"
 
-    "[Publish a document](qwe/qqwe.asd)"
-    "> asdasd"
+        if (.description) {
+            "\n\n  "
+            html(">")
+            " {.description}"
+        }
+
+        if (count(.contexts)) {
+            "\n\n  "
+            html(">")
+            for (.contexts) {
+                " [`{.title}`]({.linkMd})"
+            }
+        }
+
+        if (count(.files)) {
+            "\n\n  "
+            html(">")
+            for (.files) {
+                " [`{.title}`]({.linkMd})"
+            }
+        }
+
+        "\n\n"
+    }
 }
 
 

@@ -10,14 +10,18 @@ cli.parse({
     format: ['f', 'Parse output format', ['json', 'md', 'html']],
     pretty: [false, 'JSON pretty print'],
     output: ['o', 'Write to FILE rather than the console', 'file'],
-    cwd: ['c', 'The current working directory in which to search.', 'dir']
+    cwd: ['c', 'The current working directory in which to search.', 'dir'],
+    out: ['d', 'Document output directory.', 'dir']
 }, [ 'generate', 'parse' ]);
 
 
 cli.main(function(args, options) {
     switch (this.command) {
         case 'generate':
-            mdox.docGenerate(options.cwd || './');
+            mdox.docGenerate({
+                cwd: options.cwd || './',
+                out: options.out || './doc'
+            });
             break;
 
         case 'parse':
