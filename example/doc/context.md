@@ -6,3 +6,7 @@
 
   > [`folder1/folder2/test2.js`](file/folder1/folder2/test2.md)
 
+- [global](context/global.md)
+
+  > [`test1.js`](file/test1.md)
+

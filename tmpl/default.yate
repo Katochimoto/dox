@@ -29,7 +29,7 @@ match / comments {
 match / toc {
     data = sort(.data, string(.title))
     for (data) {
-        "- [{.title}]({.linkMd})"
+        "- [{.title}]({.link})"
 
         if (.description) {
             "\n\n  "
@@ -40,16 +40,18 @@ match / toc {
         if (count(.contexts)) {
             "\n\n  "
             html(">")
-            for (.contexts) {
-                " [`{.title}`]({.linkMd})"
+            contexts = sort(.contexts, string(.title))
+            for (contexts) {
+                " [`{.title}`]({.link})"
             }
         }
 
         if (count(.files)) {
             "\n\n  "
             html(">")
-            for (.files) {
-                " [`{.title}`]({.linkMd})"
+            files = sort(.files, string(.title))
+            for (files) {
+                " [`{.title}`]({.link})"
             }
         }
 
