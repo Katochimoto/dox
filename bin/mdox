@@ -20,7 +20,7 @@ cli.main(function(args, options) {
         case 'generate':
             mdox.docGenerate({
                 cwd: options.cwd || './',
-                out: options.out || './doc'
+                out: options.out || './docs'
             });
             break;
 
