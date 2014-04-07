@@ -4,7 +4,7 @@ var util = require('util');
 var mdox = require('..');
 var cli = require('cli').enable('help', 'version', 'status');
 
-cli.setApp('mdox', '0.0.2');
+cli.setApp('mdox', '0.4.5');
 
 cli.parse({
     format: ['f', 'Parse output format', ['json', 'md', 'html']],
